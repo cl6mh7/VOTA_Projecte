@@ -20,3 +20,11 @@ function handleScroll() {
 }
 
 window.addEventListener("scroll", handleScroll);
+
+
+
+
+//REDIRIGIR A LA PAGINA DE REGISTER.PHP
+document.getElementById('tienescuentaBotonLogin').addEventListener('click', function() {
+  window.location.href = 'register.php';
+});
