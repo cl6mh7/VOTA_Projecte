@@ -13,8 +13,8 @@ CREATE TABLE users (
     phone_number VARCHAR(255) NOT NULL,
     country VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
-    zipcode INT NOT NULL
-    token INT NOT NULL,
+    zipcode INT NOT NULL,
+    token INT NOT NULL
 );
 
 
@@ -62,9 +62,8 @@ CREATE TABLE user_vote (
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (poll_id) REFERENCES poll(poll_id),
     FOREIGN KEY (option_id) REFERENCES poll_options(option_id),
-    FOREIGN KEY (guest_email) REFERENCES user_guest(email)
+    FOREIGN KEY (guest_email) REFERENCES user_guest(guest_email)
 );
-
 
 
 
@@ -73,7 +72,14 @@ CREATE TABLE invitation (
     poll_id INT NOT NULL,
     guest_email VARCHAR(255),
     sent_date DATETIME,
-    FOREIGN KEY (guest_email) REFERENCES user_guest(email),
-    FOREIGN KEY (poll_id) REFERENCES poll(poll_id),
-    
+    FOREIGN KEY (guest_email) REFERENCES user_guest(guest_email),
+    FOREIGN KEY (poll_id) REFERENCES poll(poll_id)
 );
+
+
+
+CREATE TABLE IF NOT EXISTS pais (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  paisnombre varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=247 ;
