@@ -1,9 +1,9 @@
 <?php
     try {
         $hostname = "localhost";
-        $dbname = "VOTE";  
-        $username = "arnau";
-        $pw = "P@ssw0rd1234";
+        $dbname = "world";  
+        $username = "root";
+        $pw = "Kecuwa53";
         $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
     } catch (PDOException $e) {
         echo "Failed to get DB handle: " . $e->getMessage() . "\n";

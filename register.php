@@ -1,74 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Portal de votaciones</title>
-        <link rel="shortcut icon" href="logosinfondo.png" />
-        <link rel="stylesheet" href="styles.css">
-        <script src="script.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    </head>
-
-    <body class="registerBody">
-        <?php include 'header.php'; ?>
-
-        <div class="containerRegister">
-
-            <form class="creacuentaRegister">
-                <h1>INICIA SESIÓN</h1>
-                <img class="logoLogin" src="logosinfondo.png" alt="">
-                
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="text" id="username" required>
-                    <label for="username">Usuario</label>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="email" id="email" required>
-                    <label for="email">Correo electrónico</label>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="password" id="password" required>
-                    <label for="password">Contraseña</label>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="password" id="confirmPassword" required>
-                    <label for="confirmPassword">Repetir contraseña</label>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="tel" id="telephone" required>
-                    <label for="telephone">Número de teléfono</label>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <label for="country">País</label><br>
-                    <select class="inputRegisterPHP" id="country" required>
-                        <option value="opcion1">Opción 1</option>
-                        <option value="opcion2">Opción 2</option>
-                    </select>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="text" id="city" required>
-                    <label for="city">Ciudad</label>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="text" pattern="[0-9]{5}" id="zipcode" required>
-                    <label for="zipcode">Código postal</label>
-                </div>
-
-                <button id="siguienteBotonRegister" type="submit">Siguiente</button>        
-            </form>
-        </div>
-
-        <?php include 'footer.php'; ?>
-    </body>
-</html>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,15 +7,17 @@
     <title>Registro de Usuarios</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="register.js"></script>
-    <link rel="stylesheet" href="register.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="registerBody">
 
 <h2>Registro de Usuarios</h2>
 
-<form id="registrationForm" method="POST">
-    <button id="formbtn" type="submit">Enviar</button>
-</form>
+
+    <form id="registrationForm" method="POST">
+        <button id="formbtn" type="submit">Enviar</button>
+    </form>
+    
 
 </body>
 </html>
@@ -99,28 +30,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $passwordConfirm = $_POST['passwordConfirm'];
+    $email = $_POST['email'];
+    $telefon=$_POST['telefon'];
 
     // Realizar la validación (puedes agregar reglas específicas según tus necesidades)
-    if (empty($username) || empty($password) || empty($passwordConfirm)) {
+    if (empty($username) || empty($password) || empty($passwordConfirm) || empty($email)) {
         echo 'Todos los campos son obligatorios';
     } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
         echo 'El nombre de usuario solo puede contener letras, números y guiones bajos';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo 'El formato del email no es válido';
     } elseif ($password != $passwordConfirm) {
         echo 'Las contraseñas no coinciden';
-    } else {
+    }
+    else {
         // Consulta para verificar si el nombre de usuario ya existe
         $query = "SELECT * FROM users WHERE user_name = '$username'";
         $result = $conn->query($query);
 
+        $emailQuery = "SELECT * FROM users WHERE email = '$email'";
+        $emailResult = $conn->query($emailQuery);
+
+        $telefonQuery = "SELECT * FROM users WHERE phone_number = '$telefon'";
+        $telefonResult = $conn->query($telefonQuery);
+
         if ($result->num_rows > 0) {
             // El nombre de usuario ya existe en la base de datos
             echo 'Error: El nombre de usuario ya está en uso';
-        } else {
+        } 
+        elseif ($emailResult->num_rows > 0) {
+            echo 'Error: El email ya está registrado';
+        }
+        elseif ($telefonResult->num_rows > 0) {
+            echo 'Error: El telefono ya está registrado';
+        }
+        else {
             // Hash de la contraseña antes de almacenarla en la base de datos
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
             // El nombre de usuario no existe, insertarlo en la base de datos
-            $insert_query = "INSERT INTO users (user_name, password) VALUES ('$username', '$hashedPassword')";
+            $insert_query = "INSERT INTO users (user_name, password, email,phone_number) VALUES ('$username', '$hashedPassword', '$email','$telefon')";
             if ($conn->query($insert_query) === TRUE) {
                 echo 'Usuario registrado con éxito';
             } else {
@@ -136,6 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // Cerrar la conexión al final del script
 $conn->close();
+?>
+
 ?>
 
 

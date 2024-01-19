@@ -81,10 +81,10 @@ $(document).ready(function () {
 
     function addTelefonField() {
         var telefonField = $('<input>').attr({
-            type: 'number',
+            type: 'text',
             id: 'telefon',
             name: 'telefon',
-            placeholder: 'Telefono'
+            placeholder: '+34-XXX-XXX-XXX'
         });
 
         var labelField = $('<label>').attr('for', 'telefon').text('Telefono :');
@@ -111,10 +111,15 @@ $(document).ready(function () {
     function validateConfirmPassword(passwordConfirm,password) {
         return passwordConfirm==password;
     }
-
-    function validateTelefon(telefon) {
-        return telefon.length >= 2 ;
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     }
+    
+    function validateTelefon(telefon) {
+        return telefon.length === 12 && telefon.charAt(0) === '+';
+    }
+    
 
     function handleValidationUserName() {
         var usernameValue = $('#username').val();
@@ -123,15 +128,15 @@ $(document).ready(function () {
             alert('El nombre de usuario es válido.');
             addPasswordField();
         } else {
-            alert('El nombre de usuario debe tener al menos 3 caracteres.');
+            alert('El nombre de usuario debe tener 3 caracteres.');
         }
     }
 
     function handleValidationPassword() {
         var passwordValue = $('#password').val();
-
+        alert('La confirmación de la contraseña es válida.');
         if (validatePassword(passwordValue)) {
-            alert('La contraseña es válida.');
+            
             addPasswordConfirmationField();
         } else {
             alert('La contraseña debe tener de 8 caracteres a 16 caracteres.');
@@ -153,21 +158,21 @@ $(document).ready(function () {
     function handleValidationEmail() {
         var emailValue = $('#email').val();
 
-        if (validateConfirmPassword(emailValue)) {
+        if (validateEmail(emailValue)) {
             alert('El email es válido.');
             addTelefonField();
         } else {
-            alert('El email debe tener al menos 3 caracteres.');
+            alert('El email no tiene el caracter @.');
         }
     }
 
     function handleValidationTelefon() {
         var telefonValue = $('#telefon').val();
 
-        if (validateConfirmPassword(telefonValue)) {
+        if (validateTelefon(telefonValue)) {
             alert('El teléfono es válido.');
         } else {
-            alert('El teléfono debe tener al menos 2 caracteres.');
+            alert('El nombre debe contener el simobolo + seguido del prefijo de tu pais y los 9 digitos de tu numero .');
         }
     }
 
