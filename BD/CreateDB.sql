@@ -25,9 +25,9 @@ CREATE TABLE poll (
     user_id INT,
     start_date DATETIME,
     end_date DATETIME,
-    poll_state ENUM('active','blocked','not_started','finished') ,
-    question_visibility ENUM('public','private','hidden') ,
-    results_visibility ENUM('public','private','hidden') ,
+    poll_state ENUM('active','blocked','not_started','finished') DEFAULT NULL ,
+    question_visibility ENUM('public','private','hidden') DEFAULT NULL ,
+    results_visibility ENUM('public','private','hidden')  DEFAULT NULL,
     poll_link varchar(255) DEFAULT NULL,
     path_image varchar(255) DEFAULT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
