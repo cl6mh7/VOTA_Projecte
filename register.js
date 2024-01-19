@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var form = $('#registrationForm');
+    var form = $('#creacuentaRegister');
 
     function addUsernameField() {
         var usernameField = $('<input>').attr({

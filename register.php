@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,17 +9,21 @@
     <script src="register.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="registerBody">
 
-<h2>Registro de Usuarios</h2>
 
+    <div class="containerRegister">
+        <h1>Registro de Usuarios</h1>
+        <img class="logoLogin" src="logosinfondo.png" alt="">
+        <form id="creacuentaRegister" method="POST">
+            <button id="formbtn" type="submit">Enviar</button>
+        </form>
+    </div>
 
-    <form id="registrationForm" method="POST">
-        <button id="formbtn" type="submit">Enviar</button>
-    </form>
-    
 
 </body>
+
 </html>
 
 <?php
@@ -31,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     $passwordConfirm = $_POST['passwordConfirm'];
     $email = $_POST['email'];
-    $telefon=$_POST['telefon'];
+    $telefon = $_POST['telefon'];
 
     // Realizar la validación (puedes agregar reglas específicas según tus necesidades)
     if (empty($username) || empty($password) || empty($passwordConfirm) || empty($email)) {
@@ -42,8 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo 'El formato del email no es válido';
     } elseif ($password != $passwordConfirm) {
         echo 'Las contraseñas no coinciden';
-    }
-    else {
+    } else {
         // Consulta para verificar si el nombre de usuario ya existe
         $query = "SELECT * FROM users WHERE user_name = '$username'";
         $result = $conn->query($query);
@@ -57,14 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($result->num_rows > 0) {
             // El nombre de usuario ya existe en la base de datos
             echo 'Error: El nombre de usuario ya está en uso';
-        } 
-        elseif ($emailResult->num_rows > 0) {
+        } elseif ($emailResult->num_rows > 0) {
             echo 'Error: El email ya está registrado';
-        }
-        elseif ($telefonResult->num_rows > 0) {
+        } elseif ($telefonResult->num_rows > 0) {
             echo 'Error: El telefono ya está registrado';
-        }
-        else {
+        } else {
             // Hash de la contraseña antes de almacenarla en la base de datos
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -88,6 +88,3 @@ $conn->close();
 ?>
 
 ?>
-
-
-
