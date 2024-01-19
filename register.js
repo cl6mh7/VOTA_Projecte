@@ -1,17 +1,6 @@
 $(document).ready(function () {
     var form = $('#registrationForm');
 
-    function addValidationButton(id,  clickHandler) {
-        var validateButton = $('<button>').attr({ id: id })
-            .text('Validar').click(clickHandler);
-
-        form.append(validateButton);
-    }
-
-    function removeValidationButton(buttonId) {
-        form.find('#' + buttonId).remove();
-    }
-
     function addUsernameField() {
         var usernameField = $('<input>').attr({
             type: 'text',
@@ -25,6 +14,11 @@ $(document).ready(function () {
         form.append(labelField);
         form.append(usernameField);
         form.append('<br>');
+
+        // Agregar evento para validar cuando el campo pierde el foco
+        usernameField.on('blur', function() {
+            handleValidationUserName();
+        });
     }
 
     function addPasswordField() {
@@ -36,10 +30,14 @@ $(document).ready(function () {
         });
 
         var labelField = $('<label>').attr('for', 'password').text('Contraseña :');
-        form.append('<br>'); 
         form.append(labelField);
         form.append(passwordField);
         form.append('<br>');
+
+        // Agregar evento para validar cuando el campo pierde el foco
+        passwordField.on('blur', function() {
+            handleValidationPassword();
+        });
     }
 
     function addPasswordConfirmationField() {
@@ -51,10 +49,14 @@ $(document).ready(function () {
         });
 
         var labelField = $('<label>').attr('for', 'passwordConfirm').text('Confirmar Contraseña :');
-        form.append('<br>'); 
         form.append(labelField);
         form.append(passwordConfirmationField);
         form.append('<br>');
+
+        // Agregar evento para validar cuando el campo pierde el foco
+        passwordConfirmationField.on('blur', function() {
+            handleValidationConfirmPassword();
+        });
     }
 
     function addEmailField() {
@@ -66,25 +68,15 @@ $(document).ready(function () {
         });
 
         var labelField = $('<label>').attr('for', 'email').text('Email :');
-        form.append('<br>'); 
+
         form.append(labelField);
         form.append(emailField);
         form.append('<br>');
-    }
 
-    function addEmailField() {
-        var emailField = $('<input>').attr({
-            type: 'email',
-            id: 'email',
-            name: 'email',
-            placeholder: 'Email'
+        // Agregar evento para validar cuando el campo pierde el foco
+        emailField.on('blur', function() {
+            handleValidationEmail();
         });
-
-        var labelField = $('<label>').attr('for', 'email').text('Email :');
-        form.append('<br>'); 
-        form.append(labelField);
-        form.append(emailField);
-        form.append('<br>');
     }
 
     function addTelefonField() {
@@ -92,124 +84,93 @@ $(document).ready(function () {
             type: 'number',
             id: 'telefon',
             name: 'telefon',
-            placeholder: 'Telefon'
+            placeholder: 'Telefono'
         });
 
         var labelField = $('<label>').attr('for', 'telefon').text('Telefono :');
-        form.append('<br>'); 
+ 
         form.append(labelField);
         form.append(telefonField);
         form.append('<br>');
+
+        // Agregar evento para validar cuando el campo pierde el foco
+        telefonField.on('blur', function() {
+            handleValidationTelefon();
+        });
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     function validateUsername(username) {
         return username.length >= 3;
     }
 
     function validatePassword(password) {
-        return password.length >= 3;
+        return password.length >= 8 && password.length <= 16;
     }
+    
 
-    function validateConfirmPassword(passwordConfirm) {
-        return passwordConfirm.length >= 3;
+    function validateConfirmPassword(passwordConfirm,password) {
+        return passwordConfirm==password;
     }
 
     function validateTelefon(telefon) {
         return telefon.length >= 2 ;
     }
 
-
-    function handleValidationUserName(event) {
-        event.preventDefault();
-
+    function handleValidationUserName() {
         var usernameValue = $('#username').val();
 
         if (validateUsername(usernameValue)) {
             alert('El nombre de usuario es válido.');
             addPasswordField();
-            addValidationButton('btnPassword',  handleValidationPassword);
-            removeValidationButton('btnUserName');
         } else {
             alert('El nombre de usuario debe tener al menos 3 caracteres.');
         }
     }
 
-    function handleValidationPassword(event) {
-        event.preventDefault();
-
+    function handleValidationPassword() {
         var passwordValue = $('#password').val();
 
         if (validatePassword(passwordValue)) {
             alert('La contraseña es válida.');
             addPasswordConfirmationField();
-            addValidationButton('btnConfirmPassword',handleValidationConfirmPassword);
-            removeValidationButton('btnPassword');
         } else {
-            alert('La contraseña debe tener al menos 3 caracteres.');
+            alert('La contraseña debe tener de 8 caracteres a 16 caracteres.');
         }
     }
 
-    function handleValidationConfirmPassword(event) {
-        event.preventDefault();
-
+    function handleValidationConfirmPassword() {
         var confirmPasswordValue = $('#passwordConfirm').val();
+        var passwordValue = $('#password').val();
 
-        if (validateConfirmPassword(confirmPasswordValue)) {
+        if (validateConfirmPassword(confirmPasswordValue,passwordValue)) {
             alert('La confirmación de la contraseña es válida.');
             addEmailField();
-            addValidationButton('btnEmail',  handleValidationEmail);
-            removeValidationButton('btnConfirmPassword');
         } else {
-            alert('La confirmación de la contraseña debe tener al menos 3 caracteres.');
+            alert('Las contraseñas no coinciden');
         }
     }
 
-    function handleValidationEmail(event) {
-        event.preventDefault();
-
+    function handleValidationEmail() {
         var emailValue = $('#email').val();
 
         if (validateConfirmPassword(emailValue)) {
-            alert('La confirmación de la contraseña es válida.');
+            alert('El email es válido.');
             addTelefonField();
-            addValidationButton('btnTelefon',  handleValidationEmail);
-            removeValidationButton('btnEmail');
         } else {
-            alert('La confirmación de la contraseña debe tener al menos 3 caracteres.');
+            alert('El email debe tener al menos 3 caracteres.');
         }
     }
 
-    function handleValidationTelefon(event) {
-        event.preventDefault();
-
-        var telefonValue = $('#passwordConfirm').val();
+    function handleValidationTelefon() {
+        var telefonValue = $('#telefon').val();
 
         if (validateConfirmPassword(telefonValue)) {
-            alert('La confirmación de la contraseña es válida.');
-            removeValidationButton('btnTelefon');
+            alert('El teléfono es válido.');
         } else {
-            alert('La confirmación de la contraseña debe tener al menos 3 caracteres.');
+            alert('El teléfono debe tener al menos 2 caracteres.');
         }
-    }
-
-    // Función para eliminar el botón de validación del nombre de usuario
-    function removeValidationButton(buttonId) {
-        form.find('#' + buttonId).remove();
     }
 
     // Inicialización de la página
     addUsernameField();
-    addValidationButton('btnUserName',  handleValidationUserName);
 });
