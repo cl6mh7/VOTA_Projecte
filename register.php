@@ -6,6 +6,10 @@
         <title>Portal de votaciones</title>
         <link rel="shortcut icon" href="logosinfondo.png" />
         <link rel="stylesheet" href="styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <script src="/Pruebas/registerPruebas.js"></script>
+
         <script src="script.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     </head>
@@ -16,54 +20,9 @@
         <div class="containerRegister">
 
             <form class="creacuentaRegister">
-                <h1>INICIA SESIÓN</h1>
+                <h1>REGÍSTRATE</h1>
                 <img class="logoLogin" src="logosinfondo.png" alt="">
-                
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="text" id="username" required>
-                    <label for="username">Usuario</label>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="email" id="email" required>
-                    <label for="email">Correo electrónico</label>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="password" id="password" required>
-                    <label for="password">Contraseña</label>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="password" id="confirmPassword" required>
-                    <label for="confirmPassword">Repetir contraseña</label>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="tel" id="telephone" required>
-                    <label for="telephone">Número de teléfono</label>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <label for="country">País</label><br>
-                    <select class="inputRegisterPHP" id="country" required>
-                        <option value="opcion1">Opción 1</option>
-                        <option value="opcion2">Opción 2</option>
-                    </select>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="text" id="city" required>
-                    <label for="city">Ciudad</label>
-                </div>
-
-                <div class="datosUsuarioRegister">
-                    <input class="inputRegisterPHP" type="text" pattern="[0-9]{5}" id="zipcode" required>
-                    <label for="zipcode">Código postal</label>
-                </div>
-
-                <button id="siguienteBotonRegister" type="submit">Siguiente</button>        
-            </form>
+               
         </div>
 
         <?php include 'footer.php'; ?>

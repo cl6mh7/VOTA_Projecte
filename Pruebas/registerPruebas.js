@@ -1,3 +1,144 @@
+$(document).ready(function() {
+    var form = $('.creacuentaRegister');
+
+    // Agrega el campo de username y el botón Siguiente para el username
+    form.append('<div class="datosUsuarioRegister">' +
+                    '<input class="inputRegisterPHP" type="text" id="username" required>' +
+                    '<label for="username">Usuario</label>' +
+                '</div>');
+    form.append('<button id="siguienteBotonRegisterUsername" type="button">Siguiente</button>');
+
+    // Cuando se hace clic en el botón Siguiente para el username, valida el campo de username y luego agrega el campo de email
+    $(document).on('click', '#siguienteBotonRegisterUsername', function() {
+        var username = $('#username').val();
+        var regex = /^[a-zA-Z0-9]+$/; // Regex para validar que no hay caracteres especiales
+
+        // Si el campo de username está vacío o contiene caracteres especiales, muestra un mensaje de error y no agrega el campo de email
+        if (!username || !regex.test(username)) {
+            showErrorPopup('Por favor, introduce un nombre de usuario válido (sin caracteres especiales).');
+            return;
+        }
+
+        $(this).remove(); // Elimina el botón Siguiente para el username
+        form.append('<div class="datosUsuarioRegister">' +
+                        '<input class="inputRegisterPHP" type="email" id="email" required>' +
+                        '<label for="email">Correo electrónico</label>' +
+                    '</div>');
+        form.append('<button id="siguienteBotonRegisterEmail" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el email
+    });
+
+    // Cuando se hace clic en el botón Siguiente para el email, valida el campo de email y luego agrega el campo de password
+    $(document).on('click', '#siguienteBotonRegisterEmail', function() {
+        var email = $('#email').val();
+        var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Regex para validar que es una dirección de correo electrónico correcta
+
+        // Si el campo de email no es una dirección de correo electrónico correcta, muestra un mensaje de error
+        if (!regex.test(email)) {
+            showErrorPopup('Por favor, introduce una dirección de correo electrónico válida.');
+            return;
+        }
+
+        $(this).remove(); // Elimina el botón Siguiente para el email
+        form.append('<div class="datosUsuarioRegister">' +
+                        '<input class="inputRegisterPHP" type="password" id="password" required>' +
+                        '<label for="password">Contraseña</label>' +
+                    '</div>');
+        form.append('<button id="siguienteBotonRegisterPassword" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el password
+    });
+
+    // Cuando se hace clic en el botón Siguiente para el password, valida el campo de password
+    $(document).on('click', '#siguienteBotonRegisterPassword', function() {
+        var password = $('#password').val();
+
+        // Si la contraseña no tiene al menos 8 caracteres, muestra un mensaje de error
+        if (password.length < 8) {
+            showErrorPopup('La contraseña debe tener un mínimo de 8 carácteres.');
+            return;
+        }
+
+        // Si la contraseña no contiene al menos un número, muestra un mensaje de error
+        if (!/[0-9]/.test(password)) {
+            showErrorPopup('La contraseña debe contener al menos un carácter numérico.');
+            return;
+        }
+
+        // Si la contraseña no contiene al menos una mayúscula, muestra un mensaje de error
+        if (!/[A-Z]/.test(password)) {
+            showErrorPopup('La contraseña debe contener al menos una mayúscula.');
+            return;
+        }
+
+        // Si la contraseña no contiene al menos una minúscula, muestra un mensaje de error
+        if (!/[a-z]/.test(password)) {
+            showErrorPopup('La contraseña debe contener al menos una minúscula.');
+            return;
+        }
+
+        // Si la contraseña no contiene al menos un carácter especial, muestra un mensaje de error
+        if (!/[!@#$%^&*]/.test(password)) {
+            showErrorPopup('La contraseña debe contener al menos un carácter especial.');
+            return;
+        }
+
+        // Si la contraseña es válida, elimina el botón Siguiente para el password y agrega el campo de confirmación de contraseña
+        $(this).remove();
+        form.append('<div class="datosUsuarioRegister">' +
+                        '<input class="inputRegisterPHP" type="password" id="confirmPassword" required>' +
+                        '<label for="confirmPassword">Repetir contraseña</label>' +
+                    '</div>');
+        form.append('<button id="siguienteBotonRegisterConfirmPassword" type="button">Siguiente</button>'); // Agrega el botón Siguiente para la confirmación de la contraseña
+        });
+
+
+        // Cuando se hace clic en el botón Siguiente para la confirmación de la contraseña, valida que la contraseña confirmada sea la misma que la contraseña original
+        $(document).on('click', '#siguienteBotonRegisterConfirmPassword', function() {
+            var password = $('#password').val();
+            var confirmPassword = $('#confirmPassword').val();
+
+            // Si la contraseña confirmada no es la misma que la contraseña original, muestra un mensaje de error
+            if (password !== confirmPassword) {
+                showErrorPopup('Las contraseñas no coinciden. Por favor, confirma tu contraseña de nuevo.');
+                return;
+            }
+
+            // Aquí puedes agregar más campos de entrada o realizar otras acciones después de validar la confirmación de la contraseña
+        });
+
+
+
+
+
+    // Cuando el campo de username está vacío, borra los campos de abajo y agrega el botón Siguiente para el username
+    $(document).on('input', '#username', function() {
+        if (!$(this).val()) {
+            $('#email').val('');
+            $('#email').parent().remove(); // Elimina el campo de email
+            $('#siguienteBotonRegisterEmail').remove(); // Elimina el botón Siguiente para el email
+            $('#password').val('');
+            $('#password').parent().remove(); // Elimina el campo de password
+            $('#siguienteBotonRegisterPassword').remove(); // Elimina el botón Siguiente para el password
+            $('#confirmPassword').val('');
+            $('#confirmPassword').parent().remove(); // Elimina el campo de repetir password
+            $('#siguienteBotonRegisterConfirmPassword').remove(); // Elimina el botón Siguiente del campo repetir password
+            form.append('<button id="siguienteBotonRegisterUsername" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el username
+        }
+    });
+
+
+    // Cuando el campo de email está vacío, borra de abajo 
+    $(document).on('input', '#email', function() {
+        if (!$(this).val()) {
+            $('#password').val('');
+            $('#password').parent().remove(); // Elimina el campo de email
+            $('#siguienteBotonRegisterPassword').remove(); // Elimina el botón Siguiente para el email
+           
+            form.append('<button id="siguienteBotonRegisterEmail" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el username
+        }
+    });
+});
+
+
+
 function showErrorPopup(message) {
     // Crear la ventana flotante
     var errorPopup = $('<div/>', {
@@ -22,205 +163,4 @@ function showErrorPopup(message) {
     closeButton.click(function() {
         errorPopup.remove();
     });
-  }
-
-
-
-  $(document).ready(function() {
-    // Crear el formulario
-    var form = $('<form/>', {
-        id: 'dynamicForm'
-    });
-
-    // Crear el input para el nombre de usuario
-    var usernameInput = $('<input/>', {
-        type: 'text',
-        name: 'username',
-        id: 'username',
-        placeholder: 'Nombre de usuario'
-    });
-
-    // Crear el botón "Siguiente"
-    var nextButton = $('<button/>', {
-        text: 'Siguiente',
-        type: 'button',
-        id: 'nextButton'
-    });
-
-    // Añadir el input y el botón al formulario
-    form.append(usernameInput);
-    form.append(nextButton);
-    //form.append('<br/>'); // Añadir salto de línea
-
-    // Añadir el formulario al cuerpo del documento
-    $('body').append(form);
-
-    // Manejador de eventos para el botón "Siguiente"
-    $('#nextButton').click(function() {
-
-        // Ocultar el botón "Siguiente"
-        $(this).hide();
-
-        // Crear el contenedor para el input de la contraseña y el segundo botón
-        var passwordContainer = $('<div/>', {
-            id: 'passwordContainer'
-        });
-
-        // Crear el input para la contraseña
-        var passwordInput = $('<input/>', {
-            type: 'password',
-            name: 'password',
-            id: 'password',
-            placeholder: 'Contraseña'
-        });
-
-        // Crear el segundo botón "Siguiente"
-        var nextButton2 = $('<button/>', {
-            text: 'Siguiente',
-            type: 'button',
-            id: 'nextButton2'
-        });
-
-        // Añadir el input de la contraseña y el segundo botón al contenedor
-        passwordContainer.append(passwordInput);
-        passwordContainer.append(nextButton2);
-
-        // Añadir el contenedor al formulario
-        //form.append('<br/>'); // Añadir salto de línea
-        form.append(passwordContainer);
-
-        // Manejador de eventos para el input de nombre de usuario
-        $('#username').on('input', function() {
-            // Si el nombre de usuario está vacío, eliminar el contenedor de la contraseña
-            if ($(this).val() === '') {
-                $('#passwordContainer').remove();
-                $('#repeatPassword').remove();
-                $('#verifyButton').remove();
-                // Mostrar el botón "Siguiente" original
-                $('#nextButton').show();
-            }
-        });
-
-
-        
-        // Manejador de eventos para el segundo botón "Siguiente"
-        $('#nextButton2').click(function() {
-            // Ocultar el botón "Siguiente"
-            $(this).hide();
-
-            // Obtener el valor del input de la contraseña
-            var password = $('#password').val();
-
-            // Comprobar si la contraseña tiene al menos 8 caracteres
-            if (password.length < 8) {
-                showErrorPopup('La contraseña debe tener al menos 8 caracteres.');
-                return;
-            }
-
-            // Comprobar si la contraseña contiene al menos un carácter numérico
-            if (!/\d/.test(password)) {
-                showErrorPopup('La contraseña debe contener al menos un carácter numérico.');
-                return;
-            }
-
-            // Comprobar si la contraseña contiene al menos una mayúscula
-            if (!/[A-Z]/.test(password)) {
-                showErrorPopup('La contraseña debe contener al menos una mayúscula.');
-                return;
-            }
-
-            // Comprobar si la contraseña contiene al menos una minúscula
-            if (!/[a-z]/.test(password)) {
-                showErrorPopup('La contraseña debe contener al menos una minúscula.');
-                return;
-            }
-
-            // Comprobar si la contraseña contiene al menos un carácter especial
-            if (!/[!@#$%^&*]/.test(password)) {
-                showErrorPopup('La contraseña debe contener al menos un carácter especial.');
-                return;
-            }
-
-            // Crear el input para repetir la contraseña
-            var repeatPasswordInput = $('<input/>', {
-                type: 'password',
-                name: 'repeatPassword',
-                id: 'repeatPassword',
-                placeholder: 'Repetir contraseña'
-            });
-
-            // Crear el botón "Verificar"
-            var verifyButton = $('<button/>', {
-                text: 'Verificar',
-                type: 'button',
-                id: 'verifyButton'
-            });
-
-            // Añadir el input para repetir la contraseña y el botón "Verificar" al formulario
-            form.append(repeatPasswordInput);
-            form.append(verifyButton);
-
-            // Manejador de eventos para el input de la contraseña
-            $('#password').on('input', function() {
-                // Si la contraseña está vacía, eliminar el input para repetir la contraseña y el botón "Verificar"
-                if ($(this).val() === '') {
-                    $('#repeatPassword').remove();
-                    $('#verifyButton').remove();
-                    // Mostrar el botón "Siguiente" original
-                    $('#nextButton2').show();
-                }
-            });
-
-            // Manejador de eventos para el botón "Verificar"
-            $('#verifyButton').click(function() {
-                // Obtener el valor del input de repetir contraseña
-                var repeatPassword = $('#repeatPassword').val();
-
-                // Comprobar si las contraseñas coinciden
-                if (password !== repeatPassword) {
-                    showErrorPopup('Las contraseñas no coinciden.');
-                    return;
-                }
-             $(this).remove();
-           // Si las contraseñas coinciden, continuar con el proceso
-            if (password === repeatPassword) {
-                // Crear el input para el correo electrónico
-                var emailInput = $('<input/>', {
-                    type: 'email',
-                    name: 'email',
-                    id: 'email',
-                    placeholder: 'Correo electrónico'
-                });
-
-                // Crear el botón "Siguiente"
-                var nextButton3 = $('<button/>', {
-                    text: 'Siguiente',
-                    type: 'button',
-                    id: 'nextButton3'
-                });
-
-                // Añadir el input de correo electrónico y el botón "Siguiente" al formulario
-               // form.append('<br/>'); // Añadir salto de línea
-                form.append(emailInput);
-                form.append(nextButton3);
-
-                // Manejador de eventos para el botón "Siguiente"
-                $('#nextButton3').click(function() {
-                    // Obtener el valor del input de correo electrónico
-                    var email = $('#email').val();
-
-                    // Comprobar si el correo electrónico es válido
-                    if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
-                        showErrorPopup('Por favor, introduce un correo electrónico válido.');
-                        return;
-                    }
-
-                    $(this).remove();
-                    // Si el correo electrónico es válido, continuar con el proceso de registro
-                    // ...
-                });
-            }
-            });
-        });
-    });
-});
+}
