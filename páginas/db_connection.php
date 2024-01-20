@@ -1,5 +1,4 @@
 <?php 
-
     try {
         $hostname = "localhost";
         $dbname = "VOTE";  

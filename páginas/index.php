@@ -7,11 +7,12 @@
         <link rel="shortcut icon" href="../imgs/logosinfondo.png" />
         <link rel="stylesheet" href="../styles + scripts/styles.css">
         <script src="../styles + scripts/script.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     </head>
     <body class="bodyIndex">
         <?php
-            include 'db_connection.php';
+            /* include 'db_connection.php';
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $email = $_POST["email"];
@@ -32,7 +33,7 @@
                 }
                 unset($pdo);
                 unset($query);
-            }
+            } */
         ?>
 
         <!-- HEADER -->
