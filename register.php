@@ -22,7 +22,7 @@
 
         <div class="containerRegister">
 
-            <form class="creacuentaRegister">
+            <form class="creacuentaRegister" action="index.php" method="post">
                 <h1>REGÍSTRATE</h1>
                 <img class="logoLogin" src="logosinfondo.png" alt="">
                
