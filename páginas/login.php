@@ -10,6 +10,34 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     </head>
 
+    <?php
+        include 'db_connection.php';
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $email = $_POST["email"];
+            $contraseña = $_POST["password"];
+            $querystr = "SELECT email FROM users WHERE email = :email AND password = SHA2(:contrasena, 256)";
+            $query = $pdo->prepare($querystr);
+
+            $query->bindParam(':email', $email);
+            $query->bindParam(':contrasena', $contraseña);
+
+            $query->execute();
+            
+            $filas = $query->rowCount();
+            if ($filas > 0) {
+                session_start();
+                $_SESSION['email'] = $email;
+                echo '<script type="text/javascript">window.location = "dashboard.php";</script>';
+                exit;
+            } else {
+                echo "<script type='text/javascript'>alert('Correo electrónico o contraseña incorrectos');</script>";
+            }
+            unset($pdo);
+            unset($query);
+        }
+    ?>
+
     <body class="loginBody">
         <?php include 'header.php'; ?>
 
