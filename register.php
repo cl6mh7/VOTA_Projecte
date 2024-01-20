@@ -7,7 +7,7 @@
         <link rel="shortcut icon" href="logosinfondo.png" />
         <link rel="stylesheet" href="styles.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
+        <?php include 'db_connection.php'; ?>
         <script src="/Pruebas/registerPruebas.js"></script>
 
         <script src="script.js"></script>
@@ -15,7 +15,10 @@
     </head>
 
     <body class="registerBody">
+        
+
         <?php include 'header.php'; ?>
+       
 
         <div class="containerRegister">
 

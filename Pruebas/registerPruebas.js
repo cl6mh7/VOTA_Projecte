@@ -1,3 +1,6 @@
+
+
+
 $(document).ready(function() {
     var form = $('.creacuentaRegister');
 
@@ -90,21 +93,49 @@ $(document).ready(function() {
         });
 
 
-        // Cuando se hace clic en el botón Siguiente para la confirmación de la contraseña, valida que la contraseña confirmada sea la misma que la contraseña original
-        $(document).on('click', '#siguienteBotonRegisterConfirmPassword', function() {
-            var password = $('#password').val();
-            var confirmPassword = $('#confirmPassword').val();
+    // Cuando se hace clic en el botón Siguiente para la confirmación de la contraseña, valida que la contraseña confirmada sea la misma que la contraseña original
+    $(document).on('click', '#siguienteBotonRegisterConfirmPassword', function() {
+        var password = $('#password').val();
+        var confirmPassword = $('#confirmPassword').val();
 
-            // Si la contraseña confirmada no es la misma que la contraseña original, muestra un mensaje de error
-            if (password !== confirmPassword) {
-                showErrorPopup('Las contraseñas no coinciden. Por favor, confirma tu contraseña de nuevo.');
-                return;
-            }
+        // Si la contraseña confirmada no es la misma que la contraseña original, muestra un mensaje de error
+        if (password !== confirmPassword) {
+            showErrorPopup('Las contraseñas no coinciden. Por favor, confirma tu contraseña de nuevo.');
+            return;
+        }
 
-            // Aquí puedes agregar más campos de entrada o realizar otras acciones después de validar la confirmación de la contraseña
-        });
+        // Si la contraseña confirmada es la misma que la contraseña original, elimina el botón Siguiente para la confirmación de la contraseña y agrega el campo de número de teléfono
+        $(this).remove();
+        form.append('<div class="datosUsuarioRegister">' +
+                        '<input class="inputRegisterPHP" type="tel" id="telephone" required>' +
+                        '<label for="telephone">Número de teléfono</label>' +
+                    '</div>');
+        form.append('<button id="siguienteBotonRegisterTelephone" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el número de teléfono
+    });
 
+    // Cuando se hace clic en el botón Siguiente para el número de teléfono, valida que el número de teléfono tenga 9 dígitos y que no contenga caracteres no permitidos
+    // Cuando se hace clic en el botón Siguiente para el número de teléfono, valida que el número de teléfono tenga 9 dígitos y que no contenga caracteres no permitidos
+    $(document).on('click', '#siguienteBotonRegisterTelephone', function() {
+        var telephone = $('#telephone').val();
 
+        // Si el número de teléfono no tiene 9 dígitos, muestra un mensaje de error
+        if (telephone.length !== 9) {
+            showErrorPopup('El número de teléfono debe tener 9 dígitos.');
+            return;
+        }
+
+        // Si el número de teléfono contiene caracteres no permitidos, muestra un mensaje de error
+        if (!/^[0-9]+$/.test(telephone)) {
+            showErrorPopup('El número de teléfono no debe contener caracteres no permitidos.');
+            return;
+        }
+
+        // Si el número de teléfono es válido, elimina el botón Siguiente para el número de teléfono y agrega el campo de selección de país
+        $(this).remove();
+        // Si el número de teléfono es válido, agrega el campo de selección de país
+        form.append(countrySelectHTML);
+        form.append('<button id="siguienteBotonRegisterCountry" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el país
+    });
 
 
 
@@ -120,6 +151,9 @@ $(document).ready(function() {
             $('#confirmPassword').val('');
             $('#confirmPassword').parent().remove(); // Elimina el campo de repetir password
             $('#siguienteBotonRegisterConfirmPassword').remove(); // Elimina el botón Siguiente del campo repetir password
+            $('#telephone').val('');
+            $('#telephone').parent().remove(); // Elimina el campo de tlf
+            $('#siguienteBotonRegisterTelephone').remove(); // Elimina el botón Siguiente del campo tlf
             form.append('<button id="siguienteBotonRegisterUsername" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el username
         }
     });
@@ -129,10 +163,31 @@ $(document).ready(function() {
     $(document).on('input', '#email', function() {
         if (!$(this).val()) {
             $('#password').val('');
-            $('#password').parent().remove(); // Elimina el campo de email
-            $('#siguienteBotonRegisterPassword').remove(); // Elimina el botón Siguiente para el email
+            $('#password').parent().remove(); // Elimina el campo de password
+            $('#siguienteBotonRegisterPassword').remove(); // Elimina el botón Siguiente para el password
+            $('#confirmPassword').val('');
+            $('#confirmPassword').parent().remove(); // Elimina el campo de repetir password
+            $('#siguienteBotonRegisterConfirmPassword').remove(); // Elimina el botón Siguiente del campo repetir password
+            $('#telephone').val('');
+            $('#telephone').parent().remove(); // Elimina el campo de tlf
+            $('#siguienteBotonRegisterTelephone').remove(); // Elimina el botón Siguiente del campo tlf
            
             form.append('<button id="siguienteBotonRegisterEmail" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el username
+        }
+    });
+
+
+    // Cuando el campo de email está vacío, borra de abajo 
+    $(document).on('input', '#password', function() {
+        if (!$(this).val()) {
+            $('#confirmPassword').val('');
+            $('#confirmPassword').parent().remove(); // Elimina el campo de repetir password
+            $('#siguienteBotonRegisterConfirmPassword').remove(); // Elimina el botón Siguiente del campo repetir password
+            $('#telephone').val('');
+            $('#telephone').parent().remove(); // Elimina el campo de tlf
+            $('#siguienteBotonRegisterTelephone').remove(); // Elimina el botón Siguiente del campo tlf
+           
+            form.append('<button id="siguienteBotonRegisterPassword" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el username
         }
     });
 });
