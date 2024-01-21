@@ -20,13 +20,15 @@
         // Genera el HTML para el <select>
         $countrySelectHTML = '<div class="datosUsuarioRegister">' .
             '<label for="country">País</label><br>' .
-            '<select class="inputRegisterPHP" id="country" required>';
+            '<select class="inputRegisterPHP" id="country" name="country" required>';
         foreach ($countries as $country) {
             $countrySelectHTML .= '<option value="' . htmlspecialchars($country) . '">' . htmlspecialchars($country) . '</option>';
         }
         $countrySelectHTML .= '</select></div>';
 
 
+
+        
 
 
 
