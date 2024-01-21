@@ -14,10 +14,10 @@ CREATE TABLE users (
     country VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
     zipcode INT NOT NULL,
-    token INT NOT NULL
+    token VARCHAR(255) NOT NULL
 );
 
-
+SELECT * FROM USERS;
 
 CREATE TABLE poll (
     poll_id INT AUTO_INCREMENT PRIMARY KEY,
