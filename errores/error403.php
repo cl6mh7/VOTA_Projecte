@@ -3,7 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Votaieti</title>
+        <meta name="robots" content="noindex, nofollow">
+        <meta name="keywords" content="votaieti, votación en línea, votación, encuestas, elecciones, privacidad, seguridad">
+        <meta name="description" content="Plataforma de votación en línea comprometida con la privacidad y seguridad de los usuarios. Regístrate ahora y participa en encuestas y elecciones de manera segura.">
+        <meta property="og:title" content="Error 403 — Votaieti">
+        <meta property="og:description" content="Plataforma de votación en línea comprometida con la privacidad y seguridad de los usuarios. Regístrate ahora y participa en encuestas y elecciones de manera segura.">
+        <meta property="og:image" content="../imgs/votaietilogo.png">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="author" content="Arnau Mestre, Claudia Moyano i Henry Doudo">
+        <title>Error 403 — Votaieti</title>
         <link rel="shortcut icon" href="../imgs/logosinfondo.png" />
         <link rel="stylesheet" href="../styles + scripts/styles.css">
     </head>

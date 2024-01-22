@@ -126,8 +126,9 @@ button, a {
 
 .circulosExplicativos img {
     width: 200px;
+    height: 200px;
     border: 1px solid transparent;
-    border-radius: 100px;
+    border-radius: 100%;
     margin-top: 150px;
 }
 
@@ -151,11 +152,13 @@ button, a {
     width: 1500px;
     height: 400px;
     margin-right: -50px;
+    border: 3px solid #2B2D42;
+    border-left: none;
     z-index: 99;
 }
 
 .textoExplicativo {
-    padding: 50px 200px 0 200px;
+    padding: 50px 350px 0 350px;
     background-color: #2B2D42;
 }
 
@@ -164,13 +167,45 @@ button, a {
     color: white;
 }
 
+#buttontextoExplicativo {
+    background: linear-gradient(45deg, #EF233C 50%, #D80032 50%);
+    background-size: 200% 200%;
+    background-position: 100%;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 5px;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    color: #EDF2F4;
+    transition: background-position 1s, color 1s;
+    margin-left: 348px;
+    display: inline-block;
+}
+
+#buttontextoExplicativo:hover {
+    background-position: 0%;
+    color: #EDF2F4;
+}
+
 .textoFinal {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 100px;
-    max-width: 400px;
+    max-width: 500px;
     margin: 0 auto;
+}
+
+.textoFinal h2{
+    text-align: center;
+    line-height: 45px;
+    font-size: 45px !important;
+}
+
+.textoFinal p{
+    text-align: center;
+    line-height: 20px;
+    font-size: 17px !important;
 }
 
 .textoFinal h2 {
@@ -211,26 +246,6 @@ button, a {
     margin-left: 20px;
     padding: 10px 0 50px 0;
     background-color: #2B2D42;
-}
-
-#buttontextoExplicativo {
-    background: linear-gradient(45deg, #EF233C 50%, #D80032 50%);
-    background-size: 200% 200%;
-    background-position: 100%;
-    border: 1px solid transparent;
-    border-radius: 10px;
-    padding: 5px;
-    font-family: 'Lato', sans-serif;
-    font-size: 15px;
-    color: #EDF2F4;
-    transition: background-position 1s, color 1s;
-    margin-left: 200px;
-    display: inline-block;
-}
-
-#buttontextoExplicativo:hover {
-    background-position: 0%;
-    color: #EDF2F4;
 }
 
 /* ---------------------------------------------------- */
@@ -553,6 +568,126 @@ button, a {
 }
 
 /* ---------------------------------------------------- */
+/* DASHBOARD.PHP */            
+.bodyDashboard h3{
+    margin-top: 100px;
+    text-align: center;
+    font-size: 40px;
+    color: #8D99AE;
+}
+.bodyDashboard {
+    margin: 0;
+    padding: 0;
+}
+
+.bodyDashboard .imagenCabecera {
+    padding: 200px;
+    background-image: url("../imgs/votacion.jpg");
+}
+
+.imagenCabecera h1 {
+    margin-bottom: -30px;
+    font-family: 'Playfair Display', serif;
+    font-size: 100px;
+    color: #EDF2F4;
+}
+
+.imagenCabecera h2 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 30px;
+    color: #EDF2F4;
+    text-align: center;
+}
+
+.bodyDashboard p {
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    color: #EDF2F4;
+}
+
+.circulosDashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    align-items: center;
+    justify-content: center;
+    margin: 100px 0 100px 0;
+}
+
+.circulosDashboard div { text-align: center; }
+
+.circulosDashboard img {
+    width: 200px;
+    border: 1px solid transparent;
+    border-radius: 100px;
+    margin-top: 20px;
+}
+
+.circulosDashboard p {
+    margin: 10px 0 20px 0;
+    text-align: center;
+    color: #2B2D42;
+    overflow: visible;
+    white-space: normal;
+    width: 100%;
+}
+
+.imagenConTexto {
+    position: relative;
+    text-align: center;
+}
+
+.imagenConTexto img {
+    width: 500px;
+    border: 1px solid transparent;
+    border-radius: 80px;
+    margin-top: 20px;
+    transition-duration: 1s;
+}
+
+.imagenConTexto p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 100px 0 0 100px;
+    text-align: left !important;
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    color: #2B2D42;
+    transition-duration: 1s;
+}
+
+.imagenConTexto p em {
+    display: block;
+    margin-top: 60px;
+    font-family: 'Lato', sans-serif;
+    font-style: italic;
+    font-size: 15px;
+}
+
+.imagenConTexto img:hover{
+    transition-duration: 1s;
+    filter: hue-rotate(200deg);
+}
+.imagenConTexto:hover p { color: #EDF2F4; }
+
+/* DASHBOARD.PHP: Página interna */
+
+.paginaInterna {
+    display: none;
+    padding: 0;
+    background-color: #ffff;
+    margin-top: 20px;
+}
+
+.paginaInterna p{
+    margin: 50px;
+    color: #2B2D42;
+}
+
+/* ---------------------------------------------------- */
 /* ERROR403.PHP*/
 .bodyError403{
     margin: 0;
@@ -563,7 +698,7 @@ button, a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 200px 0 200px 0;
+    margin: 300px 0 200px 0;
 }
 
 .containerError403 img{

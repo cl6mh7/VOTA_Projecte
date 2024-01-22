@@ -3,8 +3,16 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Votaieti</title>
-        <link rel="shortcut icon" href="../imgs/logosinfondo.png" />
+        <meta name="robots" content="index, follow">
+        <meta name="keywords" content="votaieti, votación en línea, votación, encuestas, elecciones, privacidad, seguridad">
+        <meta name="description" content="Plataforma de votación en línea comprometida con la privacidad y seguridad de los usuarios. Regístrate ahora y participa en encuestas y elecciones de manera segura.">
+        <meta property="og:title" content="Inicia Sesión —Votaieti">
+        <meta property="og:description" content="Plataforma de votación en línea comprometida con la privacidad y seguridad de los usuarios. Regístrate ahora y participa en encuestas y elecciones de manera segura.">
+        <meta property="og:image" content="../imgs/votaietilogo.png">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="author" content="Arnau Mestre, Claudia Moyano i Henry Doudo">
+        <title>Inicia Sesión — Votaieti</title>
+        <link rel="shortcut icon" href="../imgs/logosinfondo.png"/>
         <link rel="stylesheet" href="../styles + scripts/styles.css">
         <script src="../styles + scripts/script.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -46,7 +54,7 @@
 
             <form class="iniciasesionLogin">
                 <h1>INICIA SESIÓN</h1>
-                <img class="logoLogin" src="l../imgs/ogosinfondo.png" alt="">
+                <img class="logoLogin" src="../imgs/logosinfondo.png" alt="Logo de Votaieti. Se trata de un círculo azul no muy oscuro con el nombre en fuente sans-serif azul oscuro debajo. El fondo es blanco.">
                 <div class="datosUsuarioLogin">
                     <input class="inputLoginPHP" type="text" id="username" required>
                     <label for="username">Usuario</label>

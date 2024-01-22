@@ -3,7 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Votaieti</title>
+        <meta name="robots" content="index, follow">
+        <meta name="keywords" content="votaieti, votación en línea, votación, encuestas, elecciones, privacidad, seguridad">
+        <meta name="description" content="Plataforma de votación en línea comprometida con la privacidad y seguridad de los usuarios. Regístrate ahora y participa en encuestas y elecciones de manera segura.">
+        <meta property="og:title" content="Regístrate — Votaieti">
+        <meta property="og:description" content="Plataforma de votación en línea comprometida con la privacidad y seguridad de los usuarios. Regístrate ahora y participa en encuestas y elecciones de manera segura.">
+        <meta property="og:image" content="../imgs/votaietilogo.png">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="author" content="Arnau Mestre, Claudia Moyano i Henry Doudo">
+        <title>Regístrate — Votaieti</title>
         <link rel="shortcut icon" href="../imgs/logosinfondo.png" />
         <link rel="stylesheet" href="../styles + scripts/styles.css">
         <script src="../styles + scripts/script.js"></script>
@@ -70,7 +78,7 @@
             
             <form class="creacuentaRegister">
                 <h1>CREA TU CUENTA</h1>
-                <img class="logoLogin" src="../imgs/logosinfondo.png" alt="">
+                <img class="logoLogin" src="../imgs/logosinfondo.png" alt="La imagen muestra un paisaje natural con un filtro azul aplicado, lo que le da una apariencia monocromática con tonos de azul predominantes. En primer plano, hay rocas grandes y pequeñas que emergen del agua tranquila del lago. El lago es calmado y claro, ofreciendo un reflejo casi perfecto de la escena circundante. Una montaña imponente se erige en el fondo, su silueta nítida contra el cielo azul oscuro. Los contornos de los árboles son visibles a lo largo de las orillas del lago, añadiendo profundidad a la escena. La paleta de colores es monocromática con tonos de azul predominantes, transmitiendo una sensación de calma y tranquilidad.">
                 
                 <div class="datosUsuarioRegister">
                     <input class="inputRegisterPHP" type="text" id="username" required>
@@ -124,7 +132,7 @@
         </div>
 
         <div id="loaderRegister" class="loaderRegister">
-            <img src="../imgs/logosinfondo.png" alt="">
+            <img src="../imgs/logosinfondo.png" alt="Logo de Votaieti. Se trata de un círculo azul no muy oscuro con el nombre en fuente sans-serif azul oscuro debajo. El fondo es blanco.">
         </div>
     </body>
 </html>
