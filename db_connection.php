@@ -4,8 +4,8 @@
     try {
         $hostname = "localhost";
         $dbname = "VOTE";  
-        $username = "root";
-        $pw = "Kecuwa53";
+        $username = "arnau";
+        $pw = "P@ssw0rd1234";
         $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
 
 
