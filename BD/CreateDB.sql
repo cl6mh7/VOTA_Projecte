@@ -13,8 +13,8 @@ CREATE TABLE users (
     phone_number VARCHAR(255) NOT NULL UNIQUE,
     country VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
-    zipcode varchar(255) NOT NULL,
-    token VARCHAR(255) NOT NULL
+    zipcode INT NOT NULL,
+    token varchar NOT NULL
 );
 
 
@@ -304,4 +304,3 @@ INSERT INTO pais (id, paisnombre) VALUES
 (242, 'Sáhara Occidental'),
 (243, 'Yemen'),
 (246, 'Puerto Rico');
-
