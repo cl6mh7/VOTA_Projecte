@@ -1,51 +1,72 @@
 <?php
+session_start(); // Iniciar la sesión
+$conn = new mysqli('localhost', 'root', '', 'VOTE');
+
+// Verificar la conexión
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $question = $_POST['question'];
     $numOptions = $_POST['numOptions'];
     $startDate = $_POST['startDate'];
     $endDate = $_POST['endDate'];
 
-    // Conectar a la base de datos
-    $conn = new mysqli('localhost', 'root', 'Kecuwa53', 'VOTE');
+    // Obtener el email de la sesión
+    if (isset($_SESSION['email'])) {
+        $email = $_SESSION['email'];
 
-    // Verificar la conexión
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+        // Consulta para obtener el user_id
+        $selectStmt = $conn->prepare("SELECT user_id FROM users WHERE email = ?");
+        $selectStmt->bind_param("s", $email);
+        $selectStmt->execute();
+        $selectStmt->bind_result($userId);
 
-    // Insertar la pregunta en la tabla de encuestas
-    $stmt = $conn->prepare("INSERT INTO poll (question, user_id, start_date, end_date, poll_state, question_visibility, results_visibility, poll_link, path_image) 
-                            VALUES (?, NULL, ?, ?, NULL, NULL, NULL, NULL, NULL)");
-    $stmt->bind_param("sss", $question, $startDate, $endDate);
-    $stmt->execute();
+        // Obtener el resultado
+        if ($selectStmt->fetch()) {
+            // Cerrar la consulta preparada
+            $selectStmt->close();
 
-    // Obtener el ID de la encuesta que acabamos de insertar
-    $pollId = $stmt->insert_id;
-
-    // Cerrar la primera consulta preparada
-    $stmt->close();
-
-    // Preparar la consulta para insertar opciones
-    // Preparar la consulta para insertar opciones
-    $stmt = $conn->prepare("INSERT INTO poll_options (poll_id, option_text, start_date, end_date, path_image) VALUES (?, ?, ?, ?, NULL)");
-
-    for ($i = 1; $i <= $numOptions; $i++) {
-        $option = $_POST["option$i"];
-        if (!empty($option)) {
-            $stmt->bind_param("isss", $pollId, $option, $startDate, $endDate);
+            // Insertar la pregunta en la tabla de encuestas con el user_id
+            $stmt = $conn->prepare("INSERT INTO poll (question, user_id, start_date, end_date, poll_state, question_visibility, results_visibility, poll_link, path_image) 
+                                    VALUES (?, ?, ?, ?, NULL, NULL, NULL, NULL, NULL)");
+            $stmt->bind_param("ssss", $question, $userId, $startDate, $endDate);
             $stmt->execute();
-        }
-    }
 
-    // Cerrar la consulta preparada
-    $stmt->close();
+            // Obtener el ID de la encuesta que acabamos de insertar
+            $pollId = $stmt->insert_id;
+
+            // Cerrar la primera consulta preparada
+            $stmt->close();
+
+            // Preparar la consulta para insertar opciones
+            $stmt = $conn->prepare("INSERT INTO poll_options (poll_id, option_text, start_date, end_date, path_image) VALUES (?, ?, ?, ?, NULL)");
+
+            for ($i = 1; $i <= $numOptions; $i++) {
+                $option = $_POST["option$i"];
+                if (!empty($option)) {
+                    $stmt->bind_param("isss", $pollId, $option, $startDate, $endDate);
+                    $stmt->execute();
+                }
+            }
+
+            // Cerrar la consulta preparada
+            $stmt->close();
+
+            echo "Encuesta creada con éxito.";
+        } else {
+            echo "No se encontró el user_id para el correo electrónico proporcionado.";
+        }
+    } else {
+        echo "La variable de sesión 'email' no está definida.";
+    }
 
     // Cerrar la conexión
     $conn->close();
-
-    echo "Encuesta creada con éxito.";
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

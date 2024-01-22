@@ -1,11 +1,16 @@
 <?php
 
+    $servername = "localhost";
+    $dbusername = "root";
+    $dbname = "vote";
+
+    // Crear conexión
+    $conn = new mysqli($servername, $dbusername,'', $dbname);
 
 if(!empty($_POST)){
 
 
     echo 'post: <pre>'.print_r($_POST,true).'</pre>';
-
 
     $username = $_POST['username'];
     $email = $_POST['email'];
@@ -17,18 +22,8 @@ if(!empty($_POST)){
 
     $token = bin2hex(random_bytes(16)); // Genera un token aleatorio
 
-    $servername = "localhost";
-    $dbusername = "root";
-    $dbpassword = "Kecuwa53";
-    $dbname = "VOTE";
-
-    // Crear conexión
-    $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
-
     // Verificar conexión
-    if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-    }
+   
 
     // Preparar la sentencia SQL
     $sql = "INSERT INTO users (user_name, email, password, phone_number, country, city, zipcode, token)

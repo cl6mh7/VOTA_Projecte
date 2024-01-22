@@ -9,7 +9,7 @@ session_start();
                 <ul class="ulHeader">
                     <li class="liHeader"><a href="index.php">Inicio</a></li>
                     <li class="liHeader"><a href="create_poll.php">Crea tu encuesta</a></li>
-                    <li class="liHeader"><a href="">Ver encuestas</a></li>
+                    <li class="liHeader"><a href="list_poll.php">Ver encuestas</a></li>
                     <li id="btnLogOut"class="liHeader"><a href="cerrar_sesion.php">Log out</a></li>
                     
                 </ul>
