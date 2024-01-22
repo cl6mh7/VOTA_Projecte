@@ -1,4 +1,52 @@
-<!DOCTYPE html>
+<?php
+
+
+if(!empty($_POST)){
+
+
+    echo 'post: <pre>'.print_r($_POST,true).'</pre>';
+
+
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = hash('sha256', $_POST['password']); // Encripta la contraseña con SHA-256
+    $telephone = $_POST['telephone'];
+    $country = $_POST['country'];
+    $city = $_POST['city'];
+    $zipcode = $_POST['zipcode'];
+
+    $token = bin2hex(random_bytes(16)); // Genera un token aleatorio
+
+    $servername = "localhost";
+    $dbusername = "arnau";
+    $dbpassword = "P@ssw0rd1234";
+    $dbname = "VOTE";
+
+    // Crear conexión
+    $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
+
+    // Verificar conexión
+    if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Preparar la sentencia SQL
+    $sql = "INSERT INTO users (user_name, email, password, phone_number, country, city, zipcode, token)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssssss", $username, $email, $password, $telephone, $country, $city, $zipcode, $token);
+
+    // Ejecutar la sentencia
+    $stmt->execute();
+
+    // Cerrar la sentencia y la conexión
+    $stmt->close();
+    $conn->close();
+
+
+}
+?><!DOCTYPE html>
 <html lang="es">
     <head>
         <meta charset="UTF-8">
@@ -22,10 +70,10 @@
         
         <div class="containerRegister">
 
-            <form class="creacuentaRegister" action="index.php" method="post">
+            <form class="creacuentaRegister" action="register.php" method="post">
                 <h1>REGÍSTRATE</h1>
                 <img class="logoLogin" src="logosinfondo.png" alt="">
-               
+
         </div>
 
         <?php include 'footer.php'; ?>
