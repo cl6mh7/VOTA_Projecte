@@ -1,14 +1,5 @@
 <?php
-    try {
-        $hostname = "localhost";
-        $dbname = "world";  
-        $username = "root";
-        $pw = "Kecuwa53";
-        $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
-    } catch (PDOException $e) {
-        echo "Failed to get DB handle: " . $e->getMessage() . "\n";
-        exit;
-    }
+    //include 'db_connection.php';
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $_POST["email"];  // Cambiado de "username" a "email"
@@ -30,7 +21,7 @@
             $_SESSION['email'] = $email;  // Cambiado de "username" a "email"
 
             // Redirigir al usuario a index.php usando JavaScript
-            echo '<script type="text/javascript">window.location = "index.php";</script>';
+            echo '<script type="text/javascript">window.location = "dashboard.php";</script>';
             exit;
         } else {
             echo "<script type='text/javascript'>alert('Correo electrónico o contraseña incorrectos');</script>";
