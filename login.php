@@ -1,5 +1,7 @@
 <?php
+    session_start();
     include 'db_connection.php';
+    
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $_POST["email"];  // Cambiado de "username" a "email"
@@ -17,7 +19,7 @@
         $filas = $query->rowCount();
         if ($filas > 0) {
             // Iniciar la sesión y guardar el correo electrónico en la sesión
-            session_start();
+        
             $_SESSION['email'] = $email;  // Cambiado de "username" a "email"
 
             // Redirigir al usuario a index.php usando JavaScript

@@ -18,8 +18,8 @@ if(!empty($_POST)){
     $token = bin2hex(random_bytes(16)); // Genera un token aleatorio
 
     $servername = "localhost";
-    $dbusername = "arnau";
-    $dbpassword = "P@ssw0rd1234";
+    $dbusername = "root";
+    $dbpassword = "Kecuwa53";
     $dbname = "VOTE";
 
     // Crear conexión
