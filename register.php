@@ -1,50 +1,33 @@
 <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the form data
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $user_name = $_POST["username"];
+    $phone_number = $_POST["phone_number"];
+    $country = $_POST["country"];
+    $city = $_POST["city"];
+    $zipcode = $_POST["zipcode"];
+    $token = bin2hex(random_bytes(50)); // Generate a random token
 
+    // Connect to the database
+    include 'db_connection.php';
 
-if(!empty($_POST)){
+    // Prepare the SQL statement
+    $stmt = $pdo->prepare("INSERT INTO users (email, password, user_name, phone_number, country, city, zipcode, token) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
+    // Bind the form data to the SQL statement
+    $stmt->bindParam(1, $email);
+    $stmt->bindParam(2, password_hash($password, PASSWORD_DEFAULT)); // Hash the password
+    $stmt->bindParam(3, $user_name);
+    $stmt->bindParam(4, $phone_number);
+    $stmt->bindParam(5, $country);
+    $stmt->bindParam(6, $city);
+    $stmt->bindParam(7, $zipcode);
+    $stmt->bindParam(8, $token);
 
-    echo 'post: <pre>'.print_r($_POST,true).'</pre>';
-
-
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = hash('sha256', $_POST['password']); // Encripta la contraseña con SHA-256
-    $telephone = $_POST['telephone'];
-    $country = $_POST['country'];
-    $city = $_POST['city'];
-    $zipcode = $_POST['zipcode'];
-
-    $token = bin2hex(random_bytes(16)); // Genera un token aleatorio
-
-    $servername = "localhost";
-    $dbusername = "arnau";
-    $dbpassword = "P@ssw0rd1234";
-    $dbname = "VOTE";
-
-    // Crear conexión
-    $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
-
-    // Verificar conexión
-    if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Preparar la sentencia SQL
-    $sql = "INSERT INTO users (user_name, email, password, phone_number, country, city, zipcode, token)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssss", $username, $email, $password, $telephone, $country, $city, $zipcode, $token);
-
-    // Ejecutar la sentencia
+    // Execute the SQL statement
     $stmt->execute();
-
-    // Cerrar la sentencia y la conexión
-    $stmt->close();
-    $conn->close();
-
-
 }
 ?><!DOCTYPE html>
 <html lang="es">
@@ -73,62 +56,9 @@ if(!empty($_POST)){
             <form class="creacuentaRegister" action="register.php" method="post">
                 <h1>REGÍSTRATE</h1>
                 <img class="logoLogin" src="logosinfondo.png" alt="">
-
+               
         </div>
 
         <?php include 'footer.php'; ?>
-        <?php
-
-
-if(!empty($_POST)){
-
-
-    echo 'post: <pre>'.print_r($_POST,true).'</pre>';
-
-
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = hash('sha256', $_POST['password']); // Encripta la contraseña con SHA-256
-    $telephone = $_POST['telephone'];
-    $country = $_POST['country'];
-    $city = $_POST['city'];
-    $zipcode = $_POST['zipcode'];
-
-    $token = bin2hex(random_bytes(16)); // Genera un token aleatorio
-
-    $servername = "localhost";
-    $dbusername = "arnau";
-    $dbpassword = "P@ssw0rd1234";
-    $dbname = "VOTE";
-
-    // Crear conexión
-    $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
-
-    // Verificar conexión
-    if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Preparar la sentencia SQL
-    $sql = "INSERT INTO users (user_name, email, password, phone_number, country, city, zipcode, token)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssss", $username, $email, $password, $telephone, $country, $city, $zipcode, $token);
-
-    // Ejecutar la sentencia
-    $stmt->execute();
-    if ($stmt->execute()) {
-        echo "Nuevo registro creado exitosamente";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-    // Cerrar la sentencia y la conexión
-    $stmt->close();
-    $conn->close();
-
-
-}
-?>
     </body>
 </html>

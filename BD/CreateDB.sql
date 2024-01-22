@@ -14,7 +14,8 @@ CREATE TABLE users (
     country VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
     zipcode INT NOT NULL,
-    token varchar NOT NULL
+    token varchar(255) NOT NULL
+
 );
 
 
