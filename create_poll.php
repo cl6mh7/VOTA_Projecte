@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Conectar a la base de datos
-    $conn = new mysqli('localhost', 'arnau', 'P@ssw0rd1234', 'VOTE');
+    $conn = new mysqli('localhost', 'root', 'Kecuwa53', 'VOTE');
 
     // Verificar la conexión
     if ($conn->connect_error) {
