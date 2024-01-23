@@ -13,13 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Connect to the database
     include 'db_connection.php';
 
-    // Check if the email already exists in the database
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
-    $stmt->execute([$email]);
-    if ($stmt->fetchColumn() > 0) {
-        die('El correo electrónico ya está en uso. Por favor, introduce otro.');
-    }
-
     // Prepare the SQL statement
     $stmt = $pdo->prepare("INSERT INTO users (email, password, user_name, phone_number, country, city, zipcode, token) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -39,7 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Execute the SQL statement
     $stmt->execute();
 }
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="es">
     <head>
         <meta charset="UTF-8">
@@ -59,7 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         
         <?php include 'header.php'; ?>
-       
         
         <div class="containerRegister">
 

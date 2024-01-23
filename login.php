@@ -1,28 +1,33 @@
 <?php
+    session_start();
     include 'db_connection.php';
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = $_POST["email"];  // Cambiado de "username" a "email"
+        $email = $_POST["email"];
         $contraseña = $_POST["password"];
         
         // Cambiado "user_name" a "email"
-        $querystr = "SELECT email FROM users WHERE email = :email AND password = SHA2(:contrasena, 256)";
+        $querystr = "SELECT password FROM users WHERE email = :email";
         $query = $pdo->prepare($querystr);
 
-        $query->bindParam(':email', $email);  // Cambiado de ":usuario" a ":email"
-        $query->bindParam(':contrasena', $contraseña);
-
+        $query->bindParam(':email', $email);
         $query->execute();
         
-        $filas = $query->rowCount();
-        if ($filas > 0) {
-            // Iniciar la sesión y guardar el correo electrónico en la sesión
-            session_start();
-            $_SESSION['email'] = $email;  // Cambiado de "username" a "email"
+        if ($query->rowCount() > 0) {
+            $user = $query->fetch(PDO::FETCH_ASSOC);
 
-            // Redirigir al usuario a index.php usando JavaScript
-            echo '<script type="text/javascript">window.location = "dashboard.php";</script>';
-            exit;
+            // Verificar la contraseña
+            if (password_verify($contraseña, $user['password'])) {
+                // Iniciar la sesión y guardar el correo electrónico en la sesión
+                session_start();
+                $_SESSION['email'] = $email;
+
+                // Redirigir al usuario a index.php usando JavaScript
+                echo '<script type="text/javascript">window.location = "dashboard.php";</script>';
+                exit;
+            } else {
+                echo "<script type='text/javascript'>alert('Correo electrónico o contraseña incorrectos');</script>";
+            }
         } else {
             echo "<script type='text/javascript'>alert('Correo electrónico o contraseña incorrectos');</script>";
         }
@@ -30,7 +35,6 @@
         unset($query);
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
     <head>
