@@ -42,7 +42,7 @@ $(document).ready(function() {
         }
 
         // Realizar la solicitud Fetch para verificar si el correo electrónico ya existe
-        fetch('check_db.php', {
+        fetch('check_email.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -148,7 +148,7 @@ $(document).ready(function() {
         }
     
         // Realizar la solicitud Fetch para verificar si el número de teléfono ya existe
-        fetch('check_bd.php', {
+        fetch('check_tlf.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
