@@ -66,7 +66,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Cerrar la consulta preparada
             $stmt->close();
 
-            echo "Encuesta creada con éxito.";
+            echo "<script>
+            function showSuccesPopup(message) {
+                // Crear la ventana flotante
+                var successPopup = $('<div/>', {
+                    id: 'successPopup',
+                    text: message,
+                    style: 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: green; color: white; padding: 20px; border-radius: 5px;'
+                });
+
+                // Crear el botón 'X'
+                var closeButton = $('<button/>', {
+                    text: 'X',
+                    style: 'position: absolute; top: 0; right: 0; background-color: transparent; color: white; border: none; font-size: 20px; cursor: pointer;'
+                });
+
+                // Añadir el botón 'X' a la ventana flotante
+                successPopup.append(closeButton);
+
+                // Añadir la ventana flotante al cuerpo del documento
+                $('body').append(successPopup);
+
+                // Manejador de eventos para el botón 'X'
+                closeButton.click(function () {
+                    successPopup.remove();
+                });
+            }
+            window.onload = function () {
+                showSuccesPopup('Encuesta creada con éxito');
+            };
+          </script>";
         } else {
             echo "No se encontró el user_id para el correo electrónico proporcionado.";
         }
@@ -88,42 +117,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Crear Encuesta</title>
     <!-- Asegúrate de incluir la biblioteca jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="createPollBody">
+    <?php include 'header.php'; ?>
 
-<h2>Crear Encuesta</h2>
-
-<form id="pollForm" method="post" action="create_poll.php">
-    <label for="question">Pregunta:</label>
-    <input type="text" id="question" name="question" required><br><br>
-
-    <label for="numOptions">Número de opciones:</label>
-    <select id="numOptions" name="numOptions">
-        <?php for($i=1; $i<=100; $i++) echo "<option value='$i'>$i</option>"; ?>
-    </select><br><br>
-
-    <div id="optionInputs"></div>
-
-    <label for="startDate">Fecha de Inicio:</label>
-    <input type="date" id="startDate" name="startDate" required><br><br>
-
-    <label for="endDate">Fecha de Finalización:</label>
-    <input type="date" id="endDate" name="endDate" required><br><br>
+    <div class="containerCreatePoll">
+    <form class="createPoll"id="pollForm" method="post" action="create_poll.php">
+    <h1 class="tituloCreatePoll">Crear Encuesta</h1>
+    <div class="datosCreatePoll">
+        <input type="text" id="question" name="question" required>
+        <label for="question">Pregunta:</label>
+    </div>
+    <div class="datosCreatePoll">
+        <label id="numeroOpciones"for="numOptions">Número de opciones:</label>
+        <select id="numOptions" name="numOptions">
+            <?php for($i=1; $i<=100; $i++) echo "<option value='$i'>$i</option>"; ?>
+        </select>
+        <div id="optionInputs"></div>
+    </div>
+  
+    <div class="datosCreatePoll">
+        <input type="date" id="startDate" name="startDate" required>
+        <label for="startDate">Fecha de Inicio:</label>
+    </div>
+    <div class="datosCreatePoll">
+        <input type="date" id="endDate" name="endDate" required>
+        <label for="endDate">Fecha de Finalización:</label>
+    </div>
 
     <button type="submit">Crear Encuesta</button>
 </form>
-
-<script>
-$(document).ready(function() {
-    $('#numOptions').change(function() {
-        var numOptions = $(this).val();
-        $('#optionInputs').empty();
-        for(var i=1; i<=numOptions; i++) {
-            $('#optionInputs').append('<label for="option'+i+'">Opción '+i+':</label><input type="text" id="option'+i+'" name="option'+i+'" required><br><br>');
-        }
+</div>
+<div class="contenedorFooter">
+            <?php include 'footer.php'; ?>
+        </div>
+    <script>
+    $(document).ready(function() {
+        $('#numOptions').change(function() {
+            var numOptions = $(this).val();
+            $('#optionInputs').empty();
+            for(var i=1; i<=numOptions; i++) {
+                $('#optionInputs').append('<label for="option'+i+'"></label><input placeholder="Option '+i+'" type="text" id="option'+i+'" name="option'+i+'" required>');
+            }
+        });
     });
-});
-</script>
-
+    </script>
 </body>
 </html>
