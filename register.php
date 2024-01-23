@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
     $user_name = $_POST["username"];
-    $phone_number = $_POST["phone_number"];
+    $phone_number = $_POST["telephone"];
     $country = $_POST["country"];
     $city = $_POST["city"];
     $zipcode = $_POST["zipcode"];
@@ -13,12 +13,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Connect to the database
     include 'db_connection.php';
 
+    // Check if the email already exists in the database
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    if ($stmt->fetchColumn() > 0) {
+        die('El correo electrónico ya está en uso. Por favor, introduce otro.');
+    }
+
     // Prepare the SQL statement
     $stmt = $pdo->prepare("INSERT INTO users (email, password, user_name, phone_number, country, city, zipcode, token) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
+    // Hash the password
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
     // Bind the form data to the SQL statement
     $stmt->bindParam(1, $email);
-    $stmt->bindParam(2, password_hash($password, PASSWORD_DEFAULT)); // Hash the password
+    $stmt->bindParam(2, $hashed_password);
     $stmt->bindParam(3, $user_name);
     $stmt->bindParam(4, $phone_number);
     $stmt->bindParam(5, $country);
