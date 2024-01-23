@@ -11,8 +11,6 @@
 if(!empty($_POST)){
 
 
-    echo 'post: <pre>'.print_r($_POST,true).'</pre>';
-
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = hash('sha256', $_POST['password']); // Encripta la contraseña con SHA-256
