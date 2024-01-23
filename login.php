@@ -1,33 +1,30 @@
 <?php
     session_start();
     include 'db_connection.php';
+    
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = $_POST["email"];
+        $email = $_POST["email"];  // Cambiado de "username" a "email"
         $contraseña = $_POST["password"];
         
         // Cambiado "user_name" a "email"
-        $querystr = "SELECT password FROM users WHERE email = :email";
+        $querystr = "SELECT email FROM users WHERE email = :email AND password = SHA2(:contrasena, 256)";
         $query = $pdo->prepare($querystr);
 
-        $query->bindParam(':email', $email);
+        $query->bindParam(':email', $email);  // Cambiado de ":usuario" a ":email"
+        $query->bindParam(':contrasena', $contraseña);
+
         $query->execute();
         
-        if ($query->rowCount() > 0) {
-            $user = $query->fetch(PDO::FETCH_ASSOC);
+        $filas = $query->rowCount();
+        if ($filas > 0) {
+            // Iniciar la sesión y guardar el correo electrónico en la sesión
+        
+            $_SESSION['email'] = $email;  // Cambiado de "username" a "email"
 
-            // Verificar la contraseña
-            if (password_verify($contraseña, $user['password'])) {
-                // Iniciar la sesión y guardar el correo electrónico en la sesión
-                session_start();
-                $_SESSION['email'] = $email;
-
-                // Redirigir al usuario a index.php usando JavaScript
-                echo '<script type="text/javascript">window.location = "dashboard.php";</script>';
-                exit;
-            } else {
-                echo "<script type='text/javascript'>alert('Correo electrónico o contraseña incorrectos');</script>";
-            }
+            // Redirigir al usuario a index.php usando JavaScript
+            echo '<script type="text/javascript">window.location = "dashboard.php";</script>';
+            exit;
         } else {
             echo "<script type='text/javascript'>alert('Correo electrónico o contraseña incorrectos');</script>";
         }
@@ -35,6 +32,7 @@
         unset($query);
     }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -65,7 +63,7 @@
                     <label for="password">Contraseña</label>
                 </div>
 
-                <button id="tienescuentaBotonLogin" type="submit">¿No tienes cuenta?</button>        
+                <a href="register.php" id="tienescuentaBotonLogin" type="submit">¿No tienes cuenta?</a>        
                 <button id="siguienteBotonLogin" type="submit">Siguiente</button>        
             </form>
         </div>

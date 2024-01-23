@@ -1,39 +1,77 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the form data
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $user_name = $_POST["username"];
-    $phone_number = $_POST["telephone"];
-    $country = $_POST["country"];
-    $city = $_POST["city"];
-    $zipcode = $_POST["zipcode"];
-    $token = bin2hex(random_bytes(50)); // Generate a random token
 
-    // Connect to the database
-    include 'db_connection.php';
+    $servername = "localhost";
+    $dbusername = "root";
+    $password= "Kecuwa53";
+    $dbname = "VOTE";
 
-    // Prepare the SQL statement
-    $stmt = $pdo->prepare("INSERT INTO users (email, password, user_name, phone_number, country, city, zipcode, token) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    // Crear conexión
+    $conn = new mysqli($servername, $dbusername,$password, $dbname);
 
-    // Hash the password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+if(!empty($_POST)){
 
-    // Bind the form data to the SQL statement
-    $stmt->bindParam(1, $email);
-    $stmt->bindParam(2, $hashed_password);
-    $stmt->bindParam(3, $user_name);
-    $stmt->bindParam(4, $phone_number);
-    $stmt->bindParam(5, $country);
-    $stmt->bindParam(6, $city);
-    $stmt->bindParam(7, $zipcode);
-    $stmt->bindParam(8, $token);
 
-    // Execute the SQL statement
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = hash('sha256', $_POST['password']); // Encripta la contraseña con SHA-256
+    $telephone = $_POST['telephone'];
+    $country = $_POST['country'];
+    $city = $_POST['city'];
+    $zipcode = $_POST['zipcode'];
+
+    $token = bin2hex(random_bytes(16)); // Genera un token aleatorio
+
+    // Verificar conexión
+   
+
+    // Preparar la sentencia SQL
+    $sql = "INSERT INTO users (user_name, email, password, phone_number, country, city, zipcode, token)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssssss", $username, $email, $password, $telephone, $country, $city, $zipcode, $token);
+
+    // Ejecutar la sentencia
     $stmt->execute();
+
+    // Cerrar la sentencia y la conexión
+ 
+    if ($stmt->affected_rows > 0) {
+        echo "<script>
+                function showSuccesPopup(message) {
+                    // Crear la ventana flotante
+                    var successPopup = $('<div/>', {
+                        id: 'successPopup',
+                        text: message,
+                        style: 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: green; color: white; padding: 20px; border-radius: 5px;'
+                    });
+
+                    // Crear el botón 'X'
+                    var closeButton = $('<button/>', {
+                        text: 'X',
+                        style: 'position: absolute; top: 0; right: 0; background-color: transparent; color: white; border: none; font-size: 20px; cursor: pointer;'
+                    });
+
+                    // Añadir el botón 'X' a la ventana flotante
+                    successPopup.append(closeButton);
+
+                    // Añadir la ventana flotante al cuerpo del documento
+                    $('body').append(successPopup);
+
+                    // Manejador de eventos para el botón 'X'
+                    closeButton.click(function () {
+                        successPopup.remove();
+                    });
+                }
+                window.onload = function () {
+                    showSuccesPopup('Usuario registrado con éxito');
+                };
+              </script>";
+    }
+    $stmt->close();
+    $conn->close();
 }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="es">
     <head>
         <meta charset="UTF-8">
@@ -53,13 +91,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         
         <?php include 'header.php'; ?>
+       
         
         <div class="containerRegister">
 
             <form class="creacuentaRegister" action="register.php" method="post">
                 <h1>REGÍSTRATE</h1>
                 <img class="logoLogin" src="logosinfondo.png" alt="">
-               
+
         </div>
 
         <?php include 'footer.php'; ?>

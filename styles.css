@@ -87,7 +87,7 @@ button, a {
 
 .bodyIndex .imagenCabecera {
     padding: 200px;
-    background-image: url("votacion.jpg");
+    background-image: url("../imgs/votacion.jpg");
 }
 
 .imagenCabecera h1 {
@@ -126,8 +126,9 @@ button, a {
 
 .circulosExplicativos img {
     width: 200px;
+    height: 200px;
     border: 1px solid transparent;
-    border-radius: 100px;
+    border-radius: 100%;
     margin-top: 150px;
 }
 
@@ -151,11 +152,13 @@ button, a {
     width: 1500px;
     height: 400px;
     margin-right: -50px;
+    border: 3px solid #2B2D42;
+    border-left: none;
     z-index: 99;
 }
 
 .textoExplicativo {
-    padding: 50px 200px 0 200px;
+    padding: 50px 350px 0 350px;
     background-color: #2B2D42;
 }
 
@@ -164,13 +167,45 @@ button, a {
     color: white;
 }
 
+#buttontextoExplicativo {
+    background: linear-gradient(45deg, #EF233C 50%, #D80032 50%);
+    background-size: 200% 200%;
+    background-position: 100%;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 5px;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    color: #EDF2F4;
+    transition: background-position 1s, color 1s;
+    margin-left: 348px;
+    display: inline-block;
+}
+
+#buttontextoExplicativo:hover {
+    background-position: 0%;
+    color: #EDF2F4;
+}
+
 .textoFinal {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 100px;
-    max-width: 400px;
+    max-width: 500px;
     margin: 0 auto;
+}
+
+.textoFinal h2{
+    text-align: center;
+    line-height: 45px;
+    font-size: 45px !important;
+}
+
+.textoFinal p{
+    text-align: center;
+    line-height: 20px;
+    font-size: 17px !important;
 }
 
 .textoFinal h2 {
@@ -193,6 +228,7 @@ button, a {
     background-size: 200% 200%;
     background-position: 100%;
     border: 1px solid transparent;
+    border-radius: 10px;
     padding: 20px;
     margin-bottom: 150px;
     font-family: 'Lato', sans-serif;
@@ -212,32 +248,12 @@ button, a {
     background-color: #2B2D42;
 }
 
-#buttontextoExplicativo {
-    background: linear-gradient(45deg, #EF233C 50%, #D80032 50%);
-    background-size: 200% 200%;
-    background-position: 100%;
-    border: 1px solid transparent;
-    padding: 5px;
-    font-family: 'Lato', sans-serif;
-    font-size: 15px;
-    color: #EDF2F4;
-    transition: background-position 1s, color 1s;
-    margin-left: 200px;
-    display: inline-block;
-}
-
-#buttontextoExplicativo:hover {
-    background-position: 0%;
-    color: #EDF2F4;
-}
-
-
 /* ---------------------------------------------------- */
 /* LOGIN.PHP */
 .loginBody {
     margin: 0;
     padding: 0;
-    background-image: url("naturaleza.jpg");
+    background-image: url("../imgs/naturaleza.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -315,15 +331,16 @@ button, a {
 
 #siguienteBotonLogin {
     padding: 10px 20px;
-    border: none;
     border-radius: 5px;
-    cursor: pointer;
     background: linear-gradient(45deg, #EF233C 50%, #D80032 50%);
     background-size: 200% 200%;
     background-position: 100%;
+    border: none;
+    border-radius: 10px;
     font-family: 'Lato', sans-serif;
     font-size: 15px;
     color: #EDF2F4;
+    cursor: pointer;
     transition: background-position 1s, color 1s;
 }
 
@@ -334,15 +351,15 @@ button, a {
 
 #tienescuentaBotonLogin {
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
     background: linear-gradient(45deg, #EDF2F4 50%, #8D99AE 50%);
     background-size: 200% 200%;
     background-position: 100%;
     font-family: 'Lato', sans-serif;
     font-size: 15px;
+    border: none;
+    border-radius: 10px;
     color: #EDF2F4;
+    cursor: pointer;
     transition: background-position 1s, color 1s;
 }
 
@@ -356,7 +373,7 @@ button, a {
 .registerBody {
     margin: 0;
     padding: 0;
-    background-image: url("naturaleza.jpg");
+    background-image: url("../imgs/naturaleza.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -450,17 +467,17 @@ button, a {
     font-size: 12px;
 }
 
-#siguienteBotonRegister {
+#siguienteBotonRegister {border-radius: 10px;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
     background: linear-gradient(45deg, #EF233C 50%, #D80032 50%);
     background-size: 200% 200%;
     background-position: 100%;
+    border: none;
+    border-radius: 10px;
     font-family: 'Lato', sans-serif;
     font-size: 15px;
     color: #EDF2F4;
+    cursor: pointer;
     transition: background-position 1s, color 1s;
 }
 
@@ -468,6 +485,342 @@ button, a {
     background-position: 0%;
     color: white;
 }
+
+.hidden { display: none; }
+
+.loaderRegister {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    display: none;
+}
+
+.loaderRegister img {
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    filter: brightness(1000%);
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ---------------------------------------------------- */
+/* ERRORES.PHP */
+
+/* ---------------------------------------------------- */
+/* ERROR404.PHP */
+.bodyError404{
+    margin: 0;
+    padding: 0 0 0 0;
+}
+
+.containerError404{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 200px 0 200px 0;
+}
+
+.containerError404 img{
+    width: 600px;
+}
+
+.containerError404 p{
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color: #2B2D42;
+}
+
+#volverButton {
+    background: linear-gradient(45deg, #EF233C 50%, #D80032 50%);
+    background-size: 200% 200%;
+    background-position: 100%;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 15px;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    color: #EDF2F4;
+    transition: background-position 1s, color 1s;
+    display: inline-block;
+}
+
+#volverButton:hover {
+    background-position: 0%;
+    color: #EDF2F4;
+}
+
+/* ---------------------------------------------------- */
+/* DASHBOARD.PHP */            
+.bodyDashboard h3{
+    margin-top: 100px;
+    text-align: center;
+    font-size: 40px;
+    color: #8D99AE;
+}
+.bodyDashboard {
+    margin: 0;
+    padding: 0;
+}
+
+.bodyDashboard .imagenCabecera {
+    padding: 200px;
+    background-image: url("../imgs/votacion.jpg");
+}
+
+.imagenCabecera h1 {
+    margin-bottom: -30px;
+    font-family: 'Playfair Display', serif;
+    font-size: 100px;
+    color: #EDF2F4;
+}
+
+.imagenCabecera h2 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 30px;
+    color: #EDF2F4;
+    text-align: center;
+}
+
+.bodyDashboard p {
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    color: #EDF2F4;
+}
+
+.circulosDashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    align-items: center;
+    justify-content: center;
+    margin: 100px 0 100px 0;
+}
+
+.circulosDashboard div { text-align: center; }
+
+.circulosDashboard img {
+    width: 200px;
+    border: 1px solid transparent;
+    border-radius: 100px;
+    margin-top: 20px;
+}
+
+.circulosDashboard p {
+    margin: 10px 0 20px 0;
+    text-align: center;
+    color: #2B2D42;
+    overflow: visible;
+    white-space: normal;
+    width: 100%;
+}
+
+.imagenConTexto {
+    position: relative;
+    text-align: center;
+}
+
+.imagenConTexto img {
+    width: 500px;
+    border: 1px solid transparent;
+    border-radius: 80px;
+    margin-top: 20px;
+    transition-duration: 1s;
+}
+
+.imagenConTexto p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 100px 0 0 100px;
+    text-align: left !important;
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    color: #2B2D42;
+    transition-duration: 1s;
+}
+
+.imagenConTexto p em {
+    display: block;
+    margin-top: 60px;
+    font-family: 'Lato', sans-serif;
+    font-style: italic;
+    font-size: 15px;
+}
+
+.imagenConTexto img:hover{
+    transition-duration: 1s;
+    filter: hue-rotate(200deg);
+}
+.imagenConTexto:hover p { color: #EDF2F4; }
+
+/* DASHBOARD.PHP: Página interna */
+
+.paginaInterna {
+    display: none;
+    padding: 0;
+    background-color: #ffff;
+    margin-top: 20px;
+}
+
+.paginaInterna p{
+    margin: 50px;
+    color: #2B2D42;
+}
+
+/* ---------------------------------------------------- */
+/* ERROR403.PHP*/
+.bodyError403{
+    margin: 0;
+    padding: 0 0 0 0;
+}
+
+.containerError403{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 300px 0 200px 0;
+}
+
+.containerError403 img{
+    width: 600px;
+}
+
+.containerError403 p{
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color: #2B2D42;
+}
+/* ---------------------------------------------------- */
+/* CREATE_POLL.PHP */
+
+.createPollBody{
+    margin: 0;
+    padding: 0;
+    background-image: url("../imgs/naturaleza.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Lato', sans-serif;
+}
+
+.containerCreatePoll{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.createPoll{
+    background-color: rgba(43, 45, 66, 0.8);
+    padding: 30px;
+    width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.tituloCreatePoll{
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif !important;
+    font-size: 40px;
+    color: #EDF2F4;
+}
+.datosCreatePoll{
+    position: relative;
+    margin-bottom: 20px;
+    margin-top: 31px;
+}
+.datosCreatePoll input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid #8D99AE;
+    background-color: transparent;
+    color: #EDF2F4;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-bottom-color 0.3s ease;
+}
+#numOptions{
+    top: -9px;
+    position: relative;
+}
+
+.datosCreatePoll input:focus, input:valid {
+    border-bottom-color: #EDF2F4;
+}
+#numeroOpciones{
+    position: absolute;
+    left: 0;
+    color: #8D99AE;
+    pointer-events: none;
+    transition: top 0.3s ease, font-size 0.3s ease;
+}
+.datosCreatePoll label {
+    position: absolute;
+    top: -12px;
+    left: 0;
+    color: #8D99AE;
+    pointer-events: none;
+    transition: top 0.3s ease, font-size 0.3s ease;
+}
+.datosCreatePoll .numOptions-label {
+    position: absolute;
+    left: 0;
+    color: #8D99AE;
+    pointer-events: none;
+    transition: top 0.3s ease, font-size 0.3s ease;
+}
+
+.datosCreatePoll input:focus + label, input:valid + label {
+    top: -15px;
+    font-size: 12px;
+}
+.btnCreatePoll{
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: linear-gradient(45deg, #EF233C 50%, #D80032 50%);
+    background-size: 200% 200%;
+    background-position: 100%;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    color: #EDF2F4;
+    cursor: pointer;
+    transition: background-position 1s, color 1s;
+}
+
+.btnCreatePoll:hover {
+    background-position: 0%;
+    color: white;
+}
+
+
+
+
+
+
+
 
 /* ---------------------------------------------------- */
 /* FOOTER.PHP */
