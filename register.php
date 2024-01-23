@@ -2,10 +2,11 @@
 
     $servername = "localhost";
     $dbusername = "root";
-    $dbname = "vote";
+    $password= "Kecuwa53";
+    $dbname = "VOTE";
 
     // Crear conexión
-    $conn = new mysqli($servername, $dbusername,'', $dbname);
+    $conn = new mysqli($servername, $dbusername,$password, $dbname);
 
 if(!empty($_POST)){
 

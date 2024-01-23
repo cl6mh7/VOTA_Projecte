@@ -1,6 +1,6 @@
 <?php
 session_start(); // Iniciar la sesión
-$conn = new mysqli('localhost', 'root', '', 'VOTE');
+$conn = new mysqli('localhost', 'root', 'Kecuwa53', 'VOTE');
 
 // Verificar la conexión
 if ($conn->connect_error) {
@@ -28,10 +28,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Cerrar la consulta preparada
             $selectStmt->close();
 
+            // Determinar el estado de la encuesta
+            $currentDate = date("Y-m-d H:i:s");
+            $pollState = "";
+
+            if ($currentDate < $startDate) {
+                $pollState = "not_started";
+            } elseif ($startDate <= $currentDate && $currentDate <= $endDate) {
+                $pollState = "active";
+            } else {
+                $pollState = "finished";
+            }
+
             // Insertar la pregunta en la tabla de encuestas con el user_id
             $stmt = $conn->prepare("INSERT INTO poll (question, user_id, start_date, end_date, poll_state, question_visibility, results_visibility, poll_link, path_image) 
-                                    VALUES (?, ?, ?, ?, NULL, NULL, NULL, NULL, NULL)");
-            $stmt->bind_param("ssss", $question, $userId, $startDate, $endDate);
+                                    VALUES (?, ?, ?, ?, ?, NULL, NULL, NULL, NULL)");
+            $stmt->bind_param("sssss", $question, $userId, $startDate, $endDate, $pollState);
             $stmt->execute();
 
             // Obtener el ID de la encuesta que acabamos de insertar

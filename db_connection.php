@@ -5,7 +5,9 @@
         $hostname = "localhost";
         $dbname = "VOTE";  
         $username = "root";
-        $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username");
+        $password="Kecuwa53";
+
+        $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username",$password);
 
 
 
