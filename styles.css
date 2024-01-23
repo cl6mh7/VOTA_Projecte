@@ -795,8 +795,7 @@ button, a {
     top: -15px;
     font-size: 12px;
 }
-
-#siguienteBotonLogin {
+.btnCreatePoll{
     padding: 10px 20px;
     border-radius: 5px;
     background: linear-gradient(45deg, #EF233C 50%, #D80032 50%);
@@ -811,7 +810,7 @@ button, a {
     transition: background-position 1s, color 1s;
 }
 
-#siguienteBotonLogin:hover {
+.btnCreatePoll:hover {
     background-position: 0%;
     color: white;
 }

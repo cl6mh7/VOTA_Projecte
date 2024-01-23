@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="endDate">Fecha de Finalización:</label>
     </div>
 
-    <button type="submit">Crear Encuesta</button>
+    <button class="btnCreatePoll"type="submit">Crear Encuesta</button>
 </form>
 </div>
 <div class="contenedorFooter">
