@@ -8,7 +8,7 @@ if ($conn->connect_error) {
 
 $telephone = $_POST['telephone'];
 
-$stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE telephone = ?");
+$stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE phone_number = ?");
 $stmt->bind_param("s", $telephone);
 $stmt->execute();
 $stmt->bind_result($count);
