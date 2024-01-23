@@ -41,12 +41,29 @@ $(document).ready(function() {
             return;
         }
 
-        $(this).remove(); // Elimina el botón Siguiente para el email
-        form.append('<div class="datosUsuarioRegister">' +
-                        '<input class="inputRegisterPHP" type="password" id="password" name="password" required>' +
-                        '<label for="password">Contraseña</label>' +
-                    '</div>');
-        form.append('<button id="siguienteBotonRegisterPassword" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el password
+        // Realizar la solicitud Fetch para verificar si el correo electrónico ya existe
+        fetch('check_db.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'email=' + encodeURIComponent(email),
+        })
+        .then(response => response.text())
+        .then(response => {
+            if (response == 'exists') {
+                showErrorPopup('El correo electrónico ya está en uso. Por favor, introduce otro.');
+                return;
+            }
+
+            // Si el correo electrónico no existe, elimina el botón Siguiente para el email y agrega el campo de contraseña y el botón Siguiente
+            $(this).remove();
+            form.append('<div class="datosUsuarioRegister">' +
+                            '<input class="inputRegisterPHP" type="password" id="password" name="password" required>' +
+                            '<label for="password">Contraseña</label>' +
+                        '</div>');
+            form.append('<button id="siguienteBotonRegisterPassword" type="button">Siguiente</button>');
+        });
     });
 
     // Cuando se hace clic en el botón Siguiente para el password, valida el campo de password
@@ -115,27 +132,41 @@ $(document).ready(function() {
     });
 
     // Cuando se hace clic en el botón Siguiente para el número de teléfono, valida que el número de teléfono tenga 9 dígitos y que no contenga caracteres no permitidos
-    // Cuando se hace clic en el botón Siguiente para el número de teléfono, valida que el número de teléfono tenga 9 dígitos y que no contenga caracteres no permitidos
     $(document).on('click', '#siguienteBotonRegisterTelephone', function() {
         var telephone = $('#telephone').val();
-
+    
         // Si el número de teléfono no tiene 9 dígitos, muestra un mensaje de error
         if (telephone.length !== 9) {
             showErrorPopup('El número de teléfono debe tener 9 dígitos.');
             return;
         }
-
+    
         // Si el número de teléfono contiene caracteres no permitidos, muestra un mensaje de error
         if (!/^[0-9]+$/.test(telephone)) {
             showErrorPopup('El número de teléfono no debe contener caracteres no permitidos.');
             return;
         }
-
-        // Si el número de teléfono es válido, elimina el botón Siguiente para el número de teléfono y agrega el campo de selección de país
-        $(this).remove();
-        // Si el número de teléfono es válido, agrega el campo de selección de país
-        form.append(countrySelectHTML);
-        form.append('<button id="siguienteBotonRegisterCountry" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el país
+    
+        // Realizar la solicitud Fetch para verificar si el número de teléfono ya existe
+        fetch('check_bd.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'telephone=' + encodeURIComponent(telephone),
+        })
+        .then(response => response.text())
+        .then(response => {
+            if (response == 'exists') {
+                showErrorPopup('El número de teléfono ya está en uso. Por favor, introduce otro.');
+                return;
+            }
+    
+            // Si el número de teléfono no existe, elimina el botón Siguiente para el número de teléfono y agrega el campo de selección de país
+            $(this).remove();
+            form.append(countrySelectHTML);
+            form.append('<button id="siguienteBotonRegisterCountry" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el país
+        });
     });
 
     $(document).on('click', '#siguienteBotonRegisterCountry', function() {
