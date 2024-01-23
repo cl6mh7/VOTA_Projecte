@@ -36,10 +36,41 @@ if(!empty($_POST)){
     $stmt->execute();
 
     // Cerrar la sentencia y la conexión
+ 
+    if ($stmt->affected_rows > 0) {
+        echo "<script>
+                function showSuccesPopup(message) {
+                    // Crear la ventana flotante
+                    var successPopup = $('<div/>', {
+                        id: 'successPopup',
+                        text: message,
+                        style: 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: green; color: white; padding: 20px; border-radius: 5px;'
+                    });
+
+                    // Crear el botón 'X'
+                    var closeButton = $('<button/>', {
+                        text: 'X',
+                        style: 'position: absolute; top: 0; right: 0; background-color: transparent; color: white; border: none; font-size: 20px; cursor: pointer;'
+                    });
+
+                    // Añadir el botón 'X' a la ventana flotante
+                    successPopup.append(closeButton);
+
+                    // Añadir la ventana flotante al cuerpo del documento
+                    $('body').append(successPopup);
+
+                    // Manejador de eventos para el botón 'X'
+                    closeButton.click(function () {
+                        successPopup.remove();
+                    });
+                }
+                window.onload = function () {
+                    showSuccesPopup('Usuario registrado con éxito');
+                };
+              </script>";
+    }
     $stmt->close();
     $conn->close();
-
-
 }
 ?><!DOCTYPE html>
 <html lang="es">

@@ -63,7 +63,7 @@
                     <label for="password">Contraseña</label>
                 </div>
 
-                <button id="tienescuentaBotonLogin" type="submit">¿No tienes cuenta?</button>        
+                <a href="register.php" id="tienescuentaBotonLogin" type="submit">¿No tienes cuenta?</a>        
                 <button id="siguienteBotonLogin" type="submit">Siguiente</button>        
             </form>
         </div>
