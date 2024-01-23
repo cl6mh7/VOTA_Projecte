@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                <div class="verVotos">
+                <div id="verVotos">
                     <a href="#paginaVerVotos">
                         <div class="imagenConTexto">
                             <img src="../imgs/aura3.jpg" alt="La imagen que me has enviado es un fondo abstracto con un degradado suave y fluido. Los colores predominantes son tonos de rosa, rojo y naranja que se mezclan armoniosamente. No hay objetos o elementos distintivos en la imagen; es puramente una mezcla colorida y etérea de tonos cálidos. La textura parece suave, sin líneas duras o bordes definidos, creando una sensación calmante.">
@@ -71,7 +71,7 @@
                     </a>
                 </div>
 
-                <div class="listarEncuestas">
+                <div id="listarEncuestas">
                     <a href="#paginaListarEncuestas">
                         <div class="imagenConTexto">
                             <img src="../imgs/aura5.jpg" alt="">
