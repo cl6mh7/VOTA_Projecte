@@ -33,16 +33,7 @@
 </html>
 <?php
 
-    $servername = "localhost";
-    $dbusername = "root";
-    $password= "P@ssw0rd";
-    $dbname = "VOTE";
-
-    // Crear conexión
-    $conn = new mysqli($servername, $dbusername,$password, $dbname);
-
 if(!empty($_POST)){
-
 
     $username = $_POST['username'];
     $email = $_POST['email'];
@@ -54,22 +45,15 @@ if(!empty($_POST)){
 
     $token = bin2hex(random_bytes(16)); // Genera un token aleatorio
 
-    // Verificar conexión
-   
-
     // Preparar la sentencia SQL
     $sql = "INSERT INTO users (user_name, email, password, phone_number, country, city, zipcode, token)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssss", $username, $email, $password, $telephone, $country, $city, $zipcode, $token);
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$username, $email, $password, $telephone, $country, $city, $zipcode, $token]);
 
-    // Ejecutar la sentencia
-    $stmt->execute();
-
-    // Cerrar la sentencia y la conexión
- 
-    if ($stmt->affected_rows > 0) {
+    // Comprobar si se insertó el registro
+    if ($stmt->rowCount() > 0) {
         echo "<script>
                 function showSuccesPopup(message) {
                     // Crear la ventana flotante
@@ -101,9 +85,5 @@ if(!empty($_POST)){
                 };
               </script>";
     }
-    $stmt->close();
-    $conn->close();
 }
-
-
 ?>
