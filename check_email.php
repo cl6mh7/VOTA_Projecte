@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli('localhost', 'root', 'root', 'VOTE');
+$conn = new mysqli('localhost', 'root', 'P@ssw0rd', 'VOTE');
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

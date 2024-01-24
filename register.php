@@ -35,7 +35,7 @@
 
     $servername = "localhost";
     $dbusername = "root";
-    $password= "root";
+    $password= "P@ssw0rd";
     $dbname = "VOTE";
 
     // Crear conexión

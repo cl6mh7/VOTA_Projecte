@@ -1,6 +1,6 @@
 <?php
 session_start(); // Iniciar la sesión
-$conn = new mysqli('localhost', 'root', 'root', 'VOTE');
+$conn = new mysqli('localhost', 'root', 'P@ssw0rd', 'VOTE');
 
 // Verificar la conexión
 if ($conn->connect_error) {
