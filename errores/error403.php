@@ -22,7 +22,7 @@
         </div>
 
         <div class="containerError403">
-            <img src="error403.gif" alt="">
+            <img src="/errores/error403.gif" alt="">
             <p>¡Ups! No tienes permiso para acceder a esta página.<br>¿Qué intentabas hacer?</p>
             <a id="volverButton" href="../index.php">Vuelve al inicio</a>
         </div>
