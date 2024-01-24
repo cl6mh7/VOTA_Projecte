@@ -26,7 +26,7 @@ include 'db_connection.php';
     <title>Panel de control — Votaieti</title>
     <link rel="shortcut icon" href="../imgs/logosinfondo.png" />
     <link rel="stylesheet" href="styles.css">
-    <script src="../styles + scripts/script.js"></script>
+    <script src="../styles + scripts/script.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 </head>
 
@@ -66,24 +66,22 @@ include 'db_connection.php';
                 while ($row = $pollStmt->fetch(PDO::FETCH_ASSOC)) {
                     $question = $row['question'];
                     $pollState = $row['poll_state'];
-
-                    // Añadir clases CSS basadas en el valor de pollState
-                    $class = '';
-                    switch ($pollState) {
-                        case 'not_started':
-                            $class = 'not-started';
-                            break;
-                        case 'finished':
-                            $class = 'finished';
-                            break;
-                        case 'active':
-                            $class = 'active';
-                            break;
+                
+                    $stateTexts = array(
+                        'not_started' => 'No iniciada',
+                        'finished' => 'Finalizada',
+                        'active' => 'Activa',
+                    );
+                
+                    // Obtener el texto personalizado según el estado
+                    if (isset($stateTexts[$pollState])) {
+                        $stateText = $stateTexts[$pollState];
+                    } else {
+                        $stateText = $pollState;
                     }
-
-                    // Mostrar la pregunta y el estado de la encuesta en una fila de la tabla
-                    echo "<tr><td>$question</td><td><span class='poll-state $class'>$pollState</span></td></tr>";
+                    echo "<tr><td>$question</td><td><span class='poll-state $pollState'>$stateText</span></td></tr>";
                 }
+               
                 echo "</tbody>";
                 echo "</table>";
 
