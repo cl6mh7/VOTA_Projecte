@@ -135,19 +135,25 @@ $(document).ready(function() {
     $(document).on('click', '#siguienteBotonRegisterTelephone', function() {
         var telephone = $('#telephone').val();
     
-        // Si el número de teléfono no tiene 9 dígitos, muestra un mensaje de error
-        if (telephone.length !== 9) {
-            showErrorPopup('El número de teléfono debe tener 9 dígitos.');
+        // Check if the phone number starts with "+"
+        if (!telephone.startsWith('+')) {
+            showErrorPopup('Introduce el prefijo del número de teléfono.');
             return;
         }
     
-        // Si el número de teléfono contiene caracteres no permitidos, muestra un mensaje de error
-        if (!/^[0-9]+$/.test(telephone)) {
+        // Check if the phone number has a minimum length of 11 and a maximum length of 12
+        if (telephone.length < 11 || telephone.length > 12) {
+            showErrorPopup('El número de teléfono debe tener un mínimo de 11 y un máximo de 12 dígitos.');
+            return;
+        }
+    
+        // Check if the phone number contains only digits after the "+"
+        if (!/^\+\d+$/.test(telephone)) {
             showErrorPopup('El número de teléfono no debe contener caracteres no permitidos.');
             return;
         }
     
-        // Realizar la solicitud Fetch para verificar si el número de teléfono ya existe
+        // Perform the Fetch request to check if the phone number already exists
         fetch('check_tlf.php', {
             method: 'POST',
             headers: {
@@ -155,17 +161,23 @@ $(document).ready(function() {
             },
             body: 'telephone=' + encodeURIComponent(telephone),
         })
-        .then(response => response.text())
         .then(response => {
-            if (response == 'exists') {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(response => {
+            console.log(response); // Log the response
+            if (response.trim() == 'exists') {
                 showErrorPopup('El número de teléfono ya está en uso. Por favor, introduce otro.');
                 return;
             }
     
-            // Si el número de teléfono no existe, elimina el botón Siguiente para el número de teléfono y agrega el campo de selección de país
+            // If the phone number does not exist, remove the Next button for the phone number and add the country selection field
             $(this).remove();
             form.append(countrySelectHTML);
-            form.append('<button id="siguienteBotonRegisterCountry" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el país
+            form.append('<button id="siguienteBotonRegisterCountry" type="button">Siguiente</button>'); // Add the Next button for the country
         });
     });
 
