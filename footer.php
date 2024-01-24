@@ -1,4 +1,5 @@
 <?php
+
     echo '<footer>
         <div class="footer-section1"><strong>Arnau Mestre</strong><br>
             <a href="mailto:amestre.cf@iesesteveterradas.cat">amestre.cf@iesesteveterradas.cat</a><br>
