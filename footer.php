@@ -30,7 +30,7 @@
         <div class="linea-horizontal"></div>
         
         <div class="footer-section">
-            <img class="logoimgFooter" src="logo.png" alt="">
+            <img class="logoimgFooter" src="imgs/logo.png" alt="">
             <p><a href="https://github.com/cl6mh7/VOTA_Projecte/tree/prod"></a></p>
             <p><a href="https://www.iesesteveterradas.cat">IES Institut Esteve Terradas i Illa</a><br>&copy; 2024. VOTAIETI</p>
         </div>
