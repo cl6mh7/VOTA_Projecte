@@ -20,7 +20,7 @@
         </div>
 
         <div class="containerError404">
-            <img src="error404.gif" alt="">
+            <img src="/errores/error404.gif" alt="">
             <p>¡Ups! La página que buscas no se ha encontrado.<br>¿Estás seguro de que existe?</p>
             <a id="volverButton" href="../index.php">Vuelve al inicio</a>
         </div>
