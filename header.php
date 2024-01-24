@@ -7,8 +7,8 @@ session_start();
             <div class="textoHeader">
                 <h1 class="h1Header"><strong>VOTAIETI</strong></h1>
                 <ul class="ulHeader">
-                    <li class="liHeader"><a href="index.php">Inicio</a></li>
-                    <li class="liHeader"><a href="dashboard.php">Dashboard</a></li>
+                    <li class="liHeader"><a href="https://aws21.ieti.site/index.php">Inicio</a></li>
+                    <li class="liHeader"><a href="https://aws21.ieti.site/dashboard.php">Dashboard</a></li>
      
                     <li id="btnLogOut"class="liHeader"><a href="cerrar_sesion.php">Log out</a></li>
                     
@@ -25,8 +25,8 @@ session_start();
                 <h1 class="h1Header"><strong>VOTAIETI</strong></h1>
                 <ul class="ulHeader">
                     <li class="liHeader"><a href="https://aws21.ieti.site/index.php">Inicio</a></li>
-                    <li class="liHeader"><a href="register.php">Regístrate</a></li>
-                    <li class="liHeader"><a href="login.php">Log in</a></li>
+                    <li class="liHeader"><a href="https://aws21.ieti.site/register.php">Regístrate</a></li>
+                    <li class="liHeader"><a href="https://aws21.ieti.site/login.php">Log in</a></li>
                 </ul>
             </div>
         </div>';
