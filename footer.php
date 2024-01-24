@@ -1,4 +1,10 @@
 <?php
+session_start();
+if(!isset($_SESSION['email'])) {
+    // Si el usuario no ha iniciado sesión, redirige a la página de error
+    header('Location: errores/error403.php');
+    exit;
+}
     echo '<footer>
         <div class="footer-section1"><strong>Arnau Mestre</strong><br>
             <a href="mailto:amestre.cf@iesesteveterradas.cat">amestre.cf@iesesteveterradas.cat</a><br>
@@ -30,7 +36,7 @@
         <div class="linea-horizontal"></div>
         
         <div class="footer-section">
-            <img class="logoimgFooter" src="imgs/logo.png" alt="">
+        <a href="https://aws21.ieti.site/index.php"><img class="logoimgFooter" src="imgs/logo.png" alt="" ></a>
             <p><a href="https://github.com/cl6mh7/VOTA_Projecte/tree/prod"></a></p>
             <p><a href="https://www.iesesteveterradas.cat">IES Institut Esteve Terradas i Illa</a><br>&copy; 2024. VOTAIETI</p>
         </div>
