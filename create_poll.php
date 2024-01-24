@@ -1,5 +1,10 @@
 <?php
 session_start(); // Iniciar la sesión
+if(!isset($_SESSION['email'])) {
+    // Si el usuario no ha iniciado sesión, redirige a la página de error
+    header('Location: errores/error403.php');
+    exit;
+}
 
 // Incluir el archivo de conexión
 include 'db_connection.php';
