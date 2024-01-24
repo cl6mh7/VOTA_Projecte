@@ -188,31 +188,25 @@ $(document).ready(function() {
             '<label for="city">Ciudad</label>' +
             '</div>');
         form.append('<button id="siguienteBotonRegisterCity" type="button">Siguiente</button>'); // Agrega el botón Siguiente para LA CIUDAD
-
     });
-
+    
     $(document).on('click', '#siguienteBotonRegisterCity', function() {
         $(this).remove();
         form.append('<div class="datosUsuarioRegister">' +
             '<input class="inputRegisterPHP" type="text" pattern="[0-9]{5}" id="zipcode" name="zipcode" required>' +
             '<label for="zipcode">Código postal</label>' +
             '</div>');
+        form.append('<button id="siguienteBotonRegister" type="submit">REGÍSTRATE</button>'); // Agrega el botón PARA REGISTRARSE
+    });
     
-        // Comprueba que el valor del input es numérico
-        $('#zipcode').keyup(function() {
-            var zipcode = $(this).val();
-            var isNumeric = $.isNumeric(zipcode);
-            if (!isNumeric || zipcode.length !== 5) {
-                // Muestra un mensaje de error
-                showErrorPopup('Por favor, introduce un código postal válido (solo números y de longitud 5).');
-                
-            } else {
-                // Si no existe el botón de registro, lo agrega
-                if ($('#siguienteBotonRegister').length === 0) {
-                    form.append('<button id="siguienteBotonRegister" type="submit">REGÍSTRATE</button>'); // Agrega el botón PARA REGISTRARSE
-                }
-            }
-        });
+    $(document).on('click', '#siguienteBotonRegister', function(e) {
+        var zipcode = $('#zipcode').val();
+        var isNumeric = $.isNumeric(zipcode);
+        if (!isNumeric || zipcode.length !== 5) {
+            // Muestra un mensaje de error
+            showErrorPopup('Por favor, introduce un código postal válido (solo números y de longitud 5).');
+            e.preventDefault();  // Previene la acción por defecto del botón (enviar el formulario)
+        }
     });
 
 
