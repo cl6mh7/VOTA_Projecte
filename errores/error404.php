@@ -12,11 +12,11 @@
         <meta name="author" content="Arnau Mestre, Claudia Moyano i Henry Doudo">
         <title>Error 404 — Votaieti</title>
         <link rel="shortcut icon" href="../imgs/logosinfondo.png" />
-        <link rel="stylesheet" href="../styles + scripts/styles.css">
+        <link rel="stylesheet" href="../styles.css">
     </head>
     <body class="bodyError404">
         <div class="contenedorHeader">
-            <?php include '../páginas/header.php'; ?>
+            <?php include '../header.php'; ?>
         </div>
 
         <div class="containerError404">
@@ -26,7 +26,7 @@
         </div>
         
         <div class="contenedorFooter">
-            <?php include '../páginas/footer.php'; ?>
+            <?php include '../footer.php'; ?>
         </div>
 
     </body>
