@@ -41,12 +41,29 @@ $(document).ready(function() {
             return;
         }
 
-        $(this).remove(); // Elimina el botón Siguiente para el email
-        form.append('<div class="datosUsuarioRegister">' +
-                        '<input class="inputRegisterPHP" type="password" id="password" name="password" required>' +
-                        '<label for="password">Contraseña</label>' +
-                    '</div>');
-        form.append('<button id="siguienteBotonRegisterPassword" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el password
+        // Realizar la solicitud Fetch para verificar si el correo electrónico ya existe
+        fetch('check_email.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'email=' + encodeURIComponent(email),
+        })
+        .then(response => response.text())
+        .then(response => {
+            if (response == 'exists') {
+                showErrorPopup('El correo electrónico ya está en uso. Por favor, introduce otro.');
+                return;
+            }
+
+            // Si el correo electrónico no existe, elimina el botón Siguiente para el email y agrega el campo de contraseña y el botón Siguiente
+            $(this).remove();
+            form.append('<div class="datosUsuarioRegister">' +
+                            '<input class="inputRegisterPHP" type="password" id="password" name="password" required>' +
+                            '<label for="password">Contraseña</label>' +
+                        '</div>');
+            form.append('<button id="siguienteBotonRegisterPassword" type="button">Siguiente</button>');
+        });
     });
 
     // Cuando se hace clic en el botón Siguiente para el password, valida el campo de password
@@ -115,27 +132,53 @@ $(document).ready(function() {
     });
 
     // Cuando se hace clic en el botón Siguiente para el número de teléfono, valida que el número de teléfono tenga 9 dígitos y que no contenga caracteres no permitidos
-    // Cuando se hace clic en el botón Siguiente para el número de teléfono, valida que el número de teléfono tenga 9 dígitos y que no contenga caracteres no permitidos
     $(document).on('click', '#siguienteBotonRegisterTelephone', function() {
         var telephone = $('#telephone').val();
-
-        // Si el número de teléfono no tiene 9 dígitos, muestra un mensaje de error
-        if (telephone.length !== 9) {
-            showErrorPopup('El número de teléfono debe tener 9 dígitos.');
+    
+        // Check if the phone number starts with "+"
+        if (!telephone.startsWith('+')) {
+            showErrorPopup('Introduce el prefijo del número de teléfono.');
             return;
         }
-
-        // Si el número de teléfono contiene caracteres no permitidos, muestra un mensaje de error
-        if (!/^[0-9]+$/.test(telephone)) {
+    
+        // Check if the phone number has a minimum length of 11 and a maximum length of 12
+        if (telephone.length < 11 || telephone.length > 12) {
+            showErrorPopup('El número de teléfono debe tener un mínimo de 11 y un máximo de 12 dígitos.');
+            return;
+        }
+    
+        // Check if the phone number contains only digits after the "+"
+        if (!/^\+\d+$/.test(telephone)) {
             showErrorPopup('El número de teléfono no debe contener caracteres no permitidos.');
             return;
         }
-
-        // Si el número de teléfono es válido, elimina el botón Siguiente para el número de teléfono y agrega el campo de selección de país
-        $(this).remove();
-        // Si el número de teléfono es válido, agrega el campo de selección de país
-        form.append(countrySelectHTML);
-        form.append('<button id="siguienteBotonRegisterCountry" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el país
+    
+        // Perform the Fetch request to check if the phone number already exists
+        fetch('check_tlf.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'telephone=' + encodeURIComponent(telephone),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(response => {
+            console.log(response); // Log the response
+            if (response.trim() == 'exists') {
+                showErrorPopup('El número de teléfono ya está en uso. Por favor, introduce otro.');
+                return;
+            }
+    
+            // If the phone number does not exist, remove the Next button for the phone number and add the country selection field
+            $(this).remove();
+            form.append(countrySelectHTML);
+            form.append('<button id="siguienteBotonRegisterCountry" type="button">Siguiente</button>'); // Add the Next button for the country
+        });
     });
 
     $(document).on('click', '#siguienteBotonRegisterCountry', function() {
@@ -145,31 +188,25 @@ $(document).ready(function() {
             '<label for="city">Ciudad</label>' +
             '</div>');
         form.append('<button id="siguienteBotonRegisterCity" type="button">Siguiente</button>'); // Agrega el botón Siguiente para LA CIUDAD
-
     });
-
+    
     $(document).on('click', '#siguienteBotonRegisterCity', function() {
         $(this).remove();
         form.append('<div class="datosUsuarioRegister">' +
             '<input class="inputRegisterPHP" type="text" pattern="[0-9]{5}" id="zipcode" name="zipcode" required>' +
             '<label for="zipcode">Código postal</label>' +
             '</div>');
+        form.append('<button id="siguienteBotonRegister" type="submit">REGÍSTRATE</button>'); // Agrega el botón PARA REGISTRARSE
+    });
     
-        // Comprueba que el valor del input es numérico
-        $('#zipcode').keyup(function() {
-            var zipcode = $(this).val();
-            var isNumeric = $.isNumeric(zipcode);
-            if (!isNumeric || zipcode.length !== 5) {
-                // Muestra un mensaje de error
-                showErrorPopup('Por favor, introduce un código postal válido (solo números y de longitud 5).');
-                
-            } else {
-                // Si no existe el botón de registro, lo agrega
-                if ($('#siguienteBotonRegister').length === 0) {
-                    form.append('<button id="siguienteBotonRegister" type="submit">REGÍSTRATE</button>'); // Agrega el botón PARA REGISTRARSE
-                }
-            }
-        });
+    $(document).on('click', '#siguienteBotonRegister', function(e) {
+        var zipcode = $('#zipcode').val();
+        var isNumeric = $.isNumeric(zipcode);
+        if (!isNumeric || zipcode.length !== 5) {
+            // Muestra un mensaje de error
+            showErrorPopup('Por favor, introduce un código postal válido (solo números y de longitud 5).');
+            e.preventDefault();  // Previene la acción por defecto del botón (enviar el formulario)
+        }
     });
 
 

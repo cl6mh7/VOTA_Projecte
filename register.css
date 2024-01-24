@@ -1,7 +1,0 @@
-form{
-    display: flex;
-    flex-direction: column;
-}
-#formbtn{
-    order:9
-}

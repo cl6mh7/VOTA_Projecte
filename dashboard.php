@@ -1,3 +1,14 @@
+
+<?php
+session_start(); // Inicia una nueva sesión o reanuda la existente
+
+// Verifica si el usuario ha iniciado sesión
+if(!isset($_SESSION['email'])) {
+    // Si el usuario no ha iniciado sesión, redirige a la página de error
+    header('Location: errores/error403.php');
+    exit;
+}
+?> 
 <!DOCTYPE html>
 <html lang="es">
     <head>

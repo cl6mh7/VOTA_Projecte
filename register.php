@@ -1,77 +1,4 @@
-<?php
-
-    $servername = "localhost";
-    $dbusername = "root";
-    $password= "";
-    $dbname = "VOTE";
-
-    // Crear conexión
-    $conn = new mysqli($servername, $dbusername,$password, $dbname);
-
-if(!empty($_POST)){
-
-
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = hash('sha256', $_POST['password']); // Encripta la contraseña con SHA-256
-    $telephone = $_POST['telephone'];
-    $country = $_POST['country'];
-    $city = $_POST['city'];
-    $zipcode = $_POST['zipcode'];
-
-    $token = bin2hex(random_bytes(16)); // Genera un token aleatorio
-
-    // Verificar conexión
-   
-
-    // Preparar la sentencia SQL
-    $sql = "INSERT INTO users (user_name, email, password, phone_number, country, city, zipcode, token)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssss", $username, $email, $password, $telephone, $country, $city, $zipcode, $token);
-
-    // Ejecutar la sentencia
-    $stmt->execute();
-
-    // Cerrar la sentencia y la conexión
- 
-    if ($stmt->affected_rows > 0) {
-        echo "<script>
-                function showSuccesPopup(message) {
-                    // Crear la ventana flotante
-                    var successPopup = $('<div/>', {
-                        id: 'successPopup',
-                        text: message,
-                        style: 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: green; color: white; padding: 20px; border-radius: 5px;'
-                    });
-
-                    // Crear el botón 'X'
-                    var closeButton = $('<button/>', {
-                        text: 'X',
-                        style: 'position: absolute; top: 0; right: 0; background-color: transparent; color: white; border: none; font-size: 20px; cursor: pointer;'
-                    });
-
-                    // Añadir el botón 'X' a la ventana flotante
-                    successPopup.append(closeButton);
-
-                    // Añadir la ventana flotante al cuerpo del documento
-                    $('body').append(successPopup);
-
-                    // Manejador de eventos para el botón 'X'
-                    closeButton.click(function () {
-                        successPopup.remove();
-                    });
-                }
-                window.onload = function () {
-                    showSuccesPopup('Usuario registrado con éxito');
-                };
-              </script>";
-    }
-    $stmt->close();
-    $conn->close();
-}
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
     <head>
         <meta charset="UTF-8">
@@ -104,3 +31,59 @@ if(!empty($_POST)){
         <?php include 'footer.php'; ?>
     </body>
 </html>
+<?php
+
+if(!empty($_POST)){
+
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = hash('sha256', $_POST['password']); // Encripta la contraseña con SHA-256
+    $telephone = $_POST['telephone'];
+    $country = $_POST['country'];
+    $city = $_POST['city'];
+    $zipcode = $_POST['zipcode'];
+
+    $token = bin2hex(random_bytes(16)); // Genera un token aleatorio
+
+    // Preparar la sentencia SQL
+    $sql = "INSERT INTO users (user_name, email, password, phone_number, country, city, zipcode, token)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$username, $email, $password, $telephone, $country, $city, $zipcode, $token]);
+
+    // Comprobar si se insertó el registro
+    if ($stmt->rowCount() > 0) {
+        echo "<script>
+                function showSuccesPopup(message) {
+                    // Crear la ventana flotante
+                    var successPopup = $('<div/>', {
+                        id: 'successPopup',
+                        text: message,
+                        style: 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: green; color: white; padding: 20px; border-radius: 5px;'
+                    });
+
+                    // Crear el botón 'X'
+                    var closeButton = $('<button/>', {
+                        text: 'X',
+                        style: 'position: absolute; top: 0; right: 0; background-color: transparent; color: white; border: none; font-size: 20px; cursor: pointer;'
+                    });
+
+                    // Añadir el botón 'X' a la ventana flotante
+                    successPopup.append(closeButton);
+
+                    // Añadir la ventana flotante al cuerpo del documento
+                    $('body').append(successPopup);
+
+                    // Manejador de eventos para el botón 'X'
+                    closeButton.click(function () {
+                        successPopup.remove();
+                    });
+                }
+                window.onload = function () {
+                    showSuccesPopup('Usuario registrado con éxito');
+                };
+              </script>";
+    }
+}
+?>
