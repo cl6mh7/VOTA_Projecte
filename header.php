@@ -1,10 +1,5 @@
 <?php
 session_start();
-if(!isset($_SESSION['email'])) {
-    // Si el usuario no ha iniciado sesión, redirige a la página de error
-    header('Location: errores/error403.php');
-    exit;
-}
  if (isset($_SESSION['email'])) {
     echo '<div class="contenedorHeader">
             <a href="https://aws21.ieti.site/index.php"><img class="imgHeader" src="imgs/logosinfondo.png" alt="Logo de Votaieti. Se trata de un círculo azul no muy oscuro con el nombre en fuente sans serif azul oscuro debajo. El fondo es blanco."></a>

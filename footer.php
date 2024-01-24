@@ -1,10 +1,4 @@
 <?php
-session_start();
-if(!isset($_SESSION['email'])) {
-    // Si el usuario no ha iniciado sesión, redirige a la página de error
-    header('Location: errores/error403.php');
-    exit;
-}
     echo '<footer>
         <div class="footer-section1"><strong>Arnau Mestre</strong><br>
             <a href="mailto:amestre.cf@iesesteveterradas.cat">amestre.cf@iesesteveterradas.cat</a><br>
