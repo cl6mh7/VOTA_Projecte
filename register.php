@@ -22,7 +22,7 @@
         
         <div class="containerRegister">
 
-            <form class="creacuentaRegister" action="register.php" method="post">
+            <form class="creacuentaRegister" action="https://aws21.ieti.site/login.php" method="post">
                 <h1>REGÍSTRATE</h1>
                 <img class="logoLogin" src="logosinfondo.png" alt="">
 
