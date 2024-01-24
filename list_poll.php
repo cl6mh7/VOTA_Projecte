@@ -1,6 +1,6 @@
 <?php
 session_start(); // Iniciar la sesión
-$conn = new mysqli('localhost', 'root', 'Kecuwa53', 'VOTE');
+$conn = new mysqli('localhost', 'root','' , 'VOTE');
 
 // Verificar la conexión
 
@@ -38,10 +38,8 @@ $conn = new mysqli('localhost', 'root', 'Kecuwa53', 'VOTE');
 
         <div class="dashboardContenedor">
             
-            <div class="circulosDashboard">
-            <?php
-session_start(); // Iniciar la sesión
-$conn = new mysqli('localhost', 'root', 'Kecuwa53', 'VOTE');
+            <div class="listPollContainer">
+            <?php   
 
 // Verificar la conexión
 if ($conn->connect_error) {
@@ -69,13 +67,30 @@ if (isset($_SESSION['email'])) {
         $pollStmt->bind_result($question, $startDate, $endDate, $pollState);
 
         // Mostrar las preguntas y el estado de la encuesta
-        echo "<h1>Preguntas para el usuario con email: $email</h1>";
-        echo "<ul>";
-        while ($pollStmt->fetch()) {
-            // Mostrar la pregunta y el estado de la encuesta
-            echo "<li>$question - Estado: $pollState</li>";
-        }
-        echo "</ul>";
+        echo "<h1>Mis encuestas</h1>";
+echo "<table>";
+echo "<thead><tr><th>Pregunta</th><th>Estado</th></tr></thead>";
+echo "<tbody>";
+while ($pollStmt->fetch()) {
+    // Añadir clases CSS basadas en el valor de pollState
+    $class = '';
+    switch ($pollState) {
+        case 'not_started':
+            $class = 'not-started';
+            break;
+        case 'finished':
+            $class = 'finished';
+            break;
+        case 'active':
+            $class = 'active';
+            break;
+    }
+
+    // Mostrar la pregunta y el estado de la encuesta en una fila de la tabla
+    echo "<tr><td>$question</td><td><span class='poll-state $class'>$pollState</span></td></tr>";
+}
+echo "</tbody>";
+echo "</table>";
 
         // Cerrar la consulta preparada
         $pollStmt->close();

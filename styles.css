@@ -3,11 +3,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
-body::-webkit-scrollbar { width: 1px; }
-body::-webkit-scrollbar-track { background-color: rgba(0, 0, 0, 0.9); }
-body::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.9);  }
-body { overflow-x: hidden; }
-button, a {
+body::-webkit-scrollbar {
+    width: 1px;
+}
+
+body::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+body {
+    overflow-x: hidden;
+}
+
+button,
+a {
     text-decoration: none;
     cursor: pointer;
 }
@@ -52,7 +65,8 @@ button, a {
     color: #EDF2F4;
 }
 
-.ulHeader, .liHeader {
+.ulHeader,
+.liHeader {
     list-style: none;
     display: flex;
     flex-direction: row;
@@ -162,8 +176,8 @@ button, a {
     background-color: #2B2D42;
 }
 
-.textoExplicativo p{
-    font-size: 20px !important; 
+.textoExplicativo p {
+    font-size: 20px !important;
     color: white;
 }
 
@@ -196,13 +210,13 @@ button, a {
     margin: 0 auto;
 }
 
-.textoFinal h2{
+.textoFinal h2 {
     text-align: center;
     line-height: 45px;
     font-size: 45px !important;
 }
 
-.textoFinal p{
+.textoFinal p {
     text-align: center;
     line-height: 20px;
     font-size: 17px !important;
@@ -311,7 +325,8 @@ button, a {
     transition: border-bottom-color 0.3s ease;
 }
 
-.datosUsuarioLogin input:focus, input:valid {
+.datosUsuarioLogin input:focus,
+input:valid {
     border-bottom-color: #EDF2F4;
 }
 
@@ -324,7 +339,8 @@ button, a {
     transition: top 0.3s ease, font-size 0.3s ease;
 }
 
-.datosUsuarioLogin input:focus + label, input:valid + label {
+.datosUsuarioLogin input:focus+label,
+input:valid+label {
     top: -15px;
     font-size: 12px;
 }
@@ -449,7 +465,8 @@ button, a {
     border-color: #2B2D42;
 }
 
-.datosUsuarioRegister input:focus, input:valid {
+.datosUsuarioRegister input:focus,
+input:valid {
     border-bottom-color: #EDF2F4;
 }
 
@@ -462,12 +479,14 @@ button, a {
     transition: top 0.3s ease, font-size 0.3s ease;
 }
 
-.datosUsuarioRegister input:focus + label, input:valid + label {
+.datosUsuarioRegister input:focus+label,
+input:valid+label {
     top: -15px;
     font-size: 12px;
 }
 
-#siguienteBotonRegister {border-radius: 10px;
+#siguienteBotonRegister {
+    border-radius: 10px;
     padding: 10px 20px;
     background: linear-gradient(45deg, #EF233C 50%, #D80032 50%);
     background-size: 200% 200%;
@@ -486,7 +505,9 @@ button, a {
     color: white;
 }
 
-.hidden { display: none; }
+.hidden {
+    display: none;
+}
 
 .loaderRegister {
     position: fixed;
@@ -516,8 +537,13 @@ button, a {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* ---------------------------------------------------- */
@@ -525,23 +551,23 @@ button, a {
 
 /* ---------------------------------------------------- */
 /* ERROR404.PHP */
-.bodyError404{
+.bodyError404 {
     margin: 0;
     padding: 0 0 0 0;
 }
 
-.containerError404{
+.containerError404 {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 200px 0 200px 0;
 }
 
-.containerError404 img{
+.containerError404 img {
     width: 600px;
 }
 
-.containerError404 p{
+.containerError404 p {
     font-family: 'Lato', sans-serif;
     font-size: 20px;
     text-align: center;
@@ -568,13 +594,14 @@ button, a {
 }
 
 /* ---------------------------------------------------- */
-/* DASHBOARD.PHP */            
-.bodyDashboard h3{
+/* DASHBOARD.PHP */
+.bodyDashboard h3 {
     margin-top: 100px;
     text-align: center;
     font-size: 40px;
     color: #8D99AE;
 }
+
 .bodyDashboard {
     margin: 0;
     padding: 0;
@@ -615,7 +642,9 @@ button, a {
     margin: 100px 0 100px 0;
 }
 
-.circulosDashboard div { text-align: center; }
+.circulosDashboard div {
+    text-align: center;
+}
 
 .circulosDashboard img {
     width: 200px;
@@ -667,11 +696,14 @@ button, a {
     font-size: 15px;
 }
 
-.imagenConTexto img:hover{
+.imagenConTexto img:hover {
     transition-duration: 1s;
     filter: hue-rotate(200deg);
 }
-.imagenConTexto:hover p { color: #EDF2F4; }
+
+.imagenConTexto:hover p {
+    color: #EDF2F4;
+}
 
 /* DASHBOARD.PHP: Página interna */
 
@@ -682,39 +714,40 @@ button, a {
     margin-top: 20px;
 }
 
-.paginaInterna p{
+.paginaInterna p {
     margin: 50px;
     color: #2B2D42;
 }
 
 /* ---------------------------------------------------- */
 /* ERROR403.PHP*/
-.bodyError403{
+.bodyError403 {
     margin: 0;
     padding: 0 0 0 0;
 }
 
-.containerError403{
+.containerError403 {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 300px 0 200px 0;
 }
 
-.containerError403 img{
+.containerError403 img {
     width: 600px;
 }
 
-.containerError403 p{
+.containerError403 p {
     font-family: 'Lato', sans-serif;
     font-size: 20px;
     text-align: center;
     color: #2B2D42;
 }
+
 /* ---------------------------------------------------- */
 /* CREATE_POLL.PHP */
 
-.createPollBody{
+.createPollBody {
     margin: 0;
     padding: 0;
     background-image: url("../imgs/naturaleza.jpg");
@@ -724,13 +757,14 @@ button, a {
     font-family: 'Lato', sans-serif;
 }
 
-.containerCreatePoll{
+.containerCreatePoll {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
 }
-.createPoll{
+
+.createPoll {
     background-color: rgba(43, 45, 66, 0.8);
     padding: 30px;
     width: 500px;
@@ -738,17 +772,20 @@ button, a {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
-.tituloCreatePoll{
+
+.tituloCreatePoll {
     margin-bottom: 20px;
     font-family: 'Playfair Display', serif !important;
     font-size: 40px;
     color: #EDF2F4;
 }
-.datosCreatePoll{
+
+.datosCreatePoll {
     position: relative;
     margin-bottom: 20px;
     margin-top: 31px;
 }
+
 .datosCreatePoll input {
     width: 100%;
     padding: 10px;
@@ -760,21 +797,25 @@ button, a {
     outline: none;
     transition: border-bottom-color 0.3s ease;
 }
-#numOptions{
+
+#numOptions {
     top: -9px;
     position: relative;
 }
 
-.datosCreatePoll input:focus, input:valid {
+.datosCreatePoll input:focus,
+input:valid {
     border-bottom-color: #EDF2F4;
 }
-#numeroOpciones{
+
+#numeroOpciones {
     position: absolute;
     left: 0;
     color: #8D99AE;
     pointer-events: none;
     transition: top 0.3s ease, font-size 0.3s ease;
 }
+
 .datosCreatePoll label {
     position: absolute;
     top: -12px;
@@ -783,6 +824,7 @@ button, a {
     pointer-events: none;
     transition: top 0.3s ease, font-size 0.3s ease;
 }
+
 .datosCreatePoll .numOptions-label {
     position: absolute;
     left: 0;
@@ -791,11 +833,13 @@ button, a {
     transition: top 0.3s ease, font-size 0.3s ease;
 }
 
-.datosCreatePoll input:focus + label, input:valid + label {
+.datosCreatePoll input:focus+label,
+input:valid+label {
     top: -15px;
     font-size: 12px;
 }
-.btnCreatePoll{
+
+.btnCreatePoll {
     padding: 10px 20px;
     border-radius: 5px;
     background: linear-gradient(45deg, #EF233C 50%, #D80032 50%);
@@ -815,8 +859,68 @@ button, a {
     color: white;
 }
 
+/* ---------------------------------------------------- */
+/* LIST_POLL.PHP */
+.listPollContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    margin: 100px 0 100px 0;
+}
+/* Otros estilos CSS existentes */
 
+.poll-state.not-started {
+    color: rgb(255, 255, 255);
+    border:solid rgb(255, 255, 255) 2px;
+    background-color:orange ;
+    padding: 0.25rem;
+    border-radius: 9999px;
+}
 
+.poll-state.finished {
+    color: rgb(255, 255, 255);
+    border:solid rgb(255, 255, 255) 2px;
+    background-color:red;
+    padding: 0.25rem;
+    border-radius: 9999px;
+}
+
+.poll-state.active {
+    color: rgb(255, 255, 255);
+    border:solid rgb(255, 255, 255) 2px;
+    background-color: green ;
+    padding: 0.25rem;
+    border-radius: 9999px;
+}
+/* Estilos generales de la tabla */
+table {
+    border-collapse: collapse;
+    width: 70%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th{
+    text-align: center;
+}
+/* Estilos para las líneas entre filas */
+tr {
+    border-bottom: 1px solid #ddd;
+}
+
+/* Estilos específicos para las celdas de la primera columna (pregunta) */
+th:first-child {
+    font-weight: bold;
+}
+td:nth-child(2) {
+    text-align: center;
+}
+/* Otros estilos CSS existentes */
 
 
 
