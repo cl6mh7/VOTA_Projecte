@@ -20,6 +20,12 @@
     </head>
     <body class="bodyIndex">
         <?php
+
+        session_start();
+        $link = "register.php";
+        if(isset($_SESSION['email'])) {
+            $link = "dashboard.php";
+        }
             /* include 'db_connection.php';
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -83,7 +89,7 @@
             <div class="textoFinal">
                 <h2>¡Únete a Votaieti y sé parte del cambio!</h2>    
                 <p>En Votaieti, creemos en el poder de tu voz. Tu opinión importa y puede marcar la diferencia. Regístrate ahora y forma parte de una comunidad comprometida con el cambio positivo.</p>
-                <a id="buttonFinalIndex" href="../páginas/register.php">Comienza a crear</a>
+                <a id="buttonFinalIndex" href="<?php echo $link; ?>">Comienza a crear</a>
             </div>
         </div>
 

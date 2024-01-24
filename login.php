@@ -19,14 +19,13 @@
         $filas = $query->rowCount();
         if ($filas > 0) {
             // Iniciar la sesión y guardar el correo electrónico en la sesión
-        
-            $_SESSION['email'] = $email;  // Cambiado de "username" a "email"
-
+            $_SESSION['email'] = $email;
             // Redirigir al usuario a index.php usando JavaScript
             echo '<script type="text/javascript">window.location = "dashboard.php";</script>';
             exit;
         } else {
-            echo "<script type='text/javascript'>alert('Correo electrónico o contraseña incorrectos');</script>";
+            $error_message = "<script type='text/javascript'>$(document).ready(function() { showErrorPopup('Correo electrónico o contraseña incorrectos'); });</script>";
+
         }
         unset($pdo);
         unset($query);
@@ -41,8 +40,9 @@
         <title>Portal de votaciones</title>
         <link rel="shortcut icon" href="logosinfondo.png" />
         <link rel="stylesheet" href="styles.css">
-        <script src="script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+        <script src="/js/script.js"></script>
     </head>
 
     <body class="loginBody">
@@ -62,6 +62,7 @@
                     <input class="inputLoginPHP" type="password" id="password" name="password" required>
                     <label for="password">Contraseña</label>
                 </div>
+                
 
                 <a href="register.php" id="tienescuentaBotonLogin" type="submit">¿No tienes cuenta?</a>        
                 <button id="siguienteBotonLogin" type="submit">Siguiente</button>        
@@ -69,5 +70,6 @@
         </div>
 
         <?php include 'footer.php'; ?>
+        <?php if (isset($error_message)) echo $error_message; ?>
     </body>
 </html>
