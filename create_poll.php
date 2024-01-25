@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Preparar la consulta para insertar opciones
             $stmt = $pdo->prepare("INSERT INTO poll_options (poll_id, option_text, start_date, end_date, path_image) VALUES (?, ?, ?, ?, NULL)");
 
-            for ($i = 1; $i <= $numOptions; $i++) {
+            for ($i = 2; $i <= $numOptions; $i++) {
                 $option = $_POST["option$i"];
                 if (!empty($option)) {
                     $stmt->execute([$pollId, $option, $startDate, $endDate]);

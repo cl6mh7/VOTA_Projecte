@@ -1,29 +1,20 @@
 <?php
-    // Conexión a la base de datos
-    $db = new mysqli('localhost', 'aws21', 'P@ssw0rd', 'VOTE');
+// Incluir el archivo de conexión
+include 'db_connection.php';
 
-    if ($db->connect_error) {
-        die("Connection failed: " . $db->connect_error);
-    }
+$email = $_POST['email'];
 
-    // Obtener el correo electrónico del POST request
-    $email = $_POST['email'];
+// Consulta para contar el número de usuarios con el mismo correo electrónico
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
+$stmt->execute([$email]);
+$count = $stmt->fetchColumn();
 
-    // Preparar la consulta SQL
-    $stmt = $db->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->bind_param("s", $email);
+if ($count > 0) {
+    echo 'exists';
+} else {
+    echo 'not exists';
+}
 
-    // Ejecutar la consulta
-    $stmt->execute();
-
-    // Obtener los resultados
-    $result = $stmt->get_result();
-
-    // Si hay al menos un resultado, el correo electrónico ya existe
-    if ($result->num_rows > 0) {
-        echo 'exists';
-    }
-
-    $stmt->close();
-    $db->close();
+// Cerrar la conexión
+$pdo = null;
 ?>
