@@ -10,9 +10,11 @@ if ($db->connect_error) {
 $telephone = $_POST['telephone'];
 
 // Consulta para contar el número de usuarios con el mismo número de teléfono
-$stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE phone_number = ?");
-$stmt->execute([$telephone]);
-$count = $stmt->fetchColumn();
+$stmt = $db->prepare("SELECT COUNT(*) FROM users WHERE phone_number = ?");
+$stmt->bind_param("s", $telephone);
+$stmt->execute();
+$result = $stmt->get_result();
+$count = $result->fetch_array()[0];
 
 if ($count > 0) {
     echo 'exists';
@@ -21,5 +23,5 @@ if ($count > 0) {
 }
 
 // Cerrar la conexión
-$pdo = null;
+$db->close();
 ?>
