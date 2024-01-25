@@ -112,93 +112,108 @@ $(document).ready(function() {
         });
 
 
-    // Cuando se hace clic en el botón Siguiente para la confirmación de la contraseña, valida que la contraseña confirmada sea la misma que la contraseña original
-    $(document).on('click', '#siguienteBotonRegisterConfirmPassword', function() {
-        var password = $('#password').val();
-        var confirmPassword = $('#confirmPassword').val();
 
-        // Si la contraseña confirmada no es la misma que la contraseña original, muestra un mensaje de error
-        if (password !== confirmPassword) {
-            showErrorPopup('Las contraseñas no coinciden. Por favor, confirma tu contraseña de nuevo.');
-            return;
-        }
 
-        // Si la contraseña confirmada es la misma que la contraseña original, elimina el botón Siguiente para la confirmación de la contraseña y agrega el campo de número de teléfono
-        $(this).remove();
-        form.append('<div class="datosUsuarioRegister">' +
-                        '<input class="inputRegisterPHP" type="tel" id="telephone" name="telephone" required>' +
-                        '<label for="telephone">Número de teléfono</label>' +
-                    '</div>');
-        form.append('<button id="siguienteBotonRegisterTelephone" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el número de teléfono
-    });
 
-    // Cuando se hace clic en el botón Siguiente para el número de teléfono, valida que el número de teléfono tenga 9 dígitos y que no contenga caracteres no permitidos
-    $(document).on('click', '#siguienteBotonRegisterTelephone', function() {
-        var telephone = $('#telephone').val();
-    
-        // Check if the phone number starts with "+"
-        if (!telephone.startsWith('+')) {
-            showErrorPopup('Introduce el prefijo del número de teléfono.');
-            return;
-        }
-    
-        // Check if the phone number has a minimum length of 11 and a maximum length of 12
-        if (telephone.length < 11 || telephone.length > 12) {
-            showErrorPopup('El número de teléfono debe tener un mínimo de 11 y un máximo de 12 dígitos.');
-            return;
-        }
-    
-        // Check if the phone number contains only digits after the "+"
-        if (!/^\+\d+$/.test(telephone)) {
-            showErrorPopup('El número de teléfono no debe contener caracteres no permitidos.');
-            return;
-        }
-    
-        // Perform the Fetch request to check if the phone number already exists
-        fetch('check_tlf.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'telephone=' + encodeURIComponent(telephone),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(response => {
-            console.log(response); // Log the response
-            if (response.trim() == 'exists') {
-                showErrorPopup('El número de teléfono ya está en uso. Por favor, introduce otro.');
+        $(document).on('click', '#siguienteBotonRegisterConfirmPassword', function() {
+            var password = $('#password').val();
+            var confirmPassword = $('#confirmPassword').val();
+        
+            // Si la contraseña confirmada no es la misma que la contraseña original, muestra un mensaje de error
+            if (password !== confirmPassword) {
+                showErrorPopup('Las contraseñas no coinciden. Por favor, confirma tu contraseña de nuevo.');
                 return;
             }
-    
-            // If the phone number does not exist, remove the Next button for the phone number and add the country selection field
+        
+            // Si la contraseña confirmada es la misma que la contraseña original, elimina el botón Siguiente para la confirmación de la contraseña y agrega el campo de selección de país
             $(this).remove();
             form.append(countrySelectHTML);
-            form.append('<button id="siguienteBotonRegisterCountry" type="button">Siguiente</button>'); // Add the Next button for the country
+            form.append('<button id="siguienteBotonRegisterCountry" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el país
         });
-    });
+        
+        $(document).on('click', '#siguienteBotonRegisterCountry', function() {
+            // Elimina el botón Siguiente para el país y agrega el campo de número de teléfono
+            $(this).remove();
+            form.append('<div class="datosUsuarioRegister">' +
+                            '<input class="inputRegisterPHP" type="tel" id="telephone" name="telephone" required>' +
+                            '<label for="telephone">Número de teléfono</label>' +
+                        '</div>');
+            form.append('<button id="siguienteBotonRegisterTelephone" type="button">Siguiente</button>'); // Agrega el botón Siguiente para el número de teléfono
+        
+            // Obtiene el prefijo del país seleccionado
+            var selectedCountryPrefix = $('#country option:selected').data('prefix');
+        
+            // Establece el valor del campo de número de teléfono al prefijo del país
+            $('#telephone').val(selectedCountryPrefix);
+        });
 
-    $(document).on('click', '#siguienteBotonRegisterCountry', function() {
-        $(this).remove();
-        form.append('<div class="datosUsuarioRegister">' +
-            '<input class="inputRegisterPHP" type="text" id="city" name="city" required>' +
-            '<label for="city">Ciudad</label>' +
-            '</div>');
-        form.append('<button id="siguienteBotonRegisterCity" type="button">Siguiente</button>'); // Agrega el botón Siguiente para LA CIUDAD
-    });
-    
-    $(document).on('click', '#siguienteBotonRegisterCity', function() {
-        $(this).remove();
-        form.append('<div class="datosUsuarioRegister">' +
-            '<input class="inputRegisterPHP" type="text" pattern="[0-9]{5}" id="zipcode" name="zipcode" required>' +
-            '<label for="zipcode">Código postal</label>' +
-            '</div>');
-        form.append('<button id="siguienteBotonRegister" type="submit">REGÍSTRATE</button>'); // Agrega el botón PARA REGISTRARSE
-    });
+
+        
+        // Cuando se hace clic en el botón Siguiente para el número de teléfono, valida que el número de teléfono tenga 9 dígitos y que no contenga caracteres no permitidos
+        $(document).on('click', '#siguienteBotonRegisterTelephone', function() {
+            var telephone = $('#telephone').val();
+        
+            // Check if the phone number starts with "+"
+            if (!telephone.startsWith('+')) {
+                showErrorPopup('Introduce el prefijo del número de teléfono.');
+                return;
+            }
+        
+            // Check if the phone number has a minimum length of 11 and a maximum length of 12
+            if (telephone.length < 11 || telephone.length > 15) {
+                showErrorPopup('Longitud del numero de teléfono incorrecta.');
+                return;
+            }
+        
+            // Check if the phone number contains only digits after the "+"
+            if (!/^\+\d+$/.test(telephone)) {
+                showErrorPopup('El número de teléfono no debe contener caracteres no permitidos.');
+                return;
+            }
+        
+            // Perform the Fetch request to check if the phone number already exists
+            fetch('check_tlf.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'telephone=' + encodeURIComponent(telephone),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(response => {
+                console.log(response); // Log the response
+                if (response.trim() == 'exists') {
+                    showErrorPopup('El número de teléfono ya está en uso. Por favor, introduce otro.');
+                    return;
+                }
+        
+                // If the phone number does not exist, remove the Next button for the phone number and add the city field
+                $(this).remove();
+                form.append('<div class="datosUsuarioRegister">' +
+                    '<input class="inputRegisterPHP" type="text" id="city" name="city" required>' +
+                    '<label for="city">Ciudad</label>' +
+                    '</div>');
+                form.append('<button id="siguienteBotonRegisterCity" type="button">Siguiente</button>'); // Agrega el botón Siguiente para LA CIUDAD
+            });
+        });
+        
+        $(document).on('click', '#siguienteBotonRegisterCity', function() {
+            $(this).remove();
+            form.append('<div class="datosUsuarioRegister">' +
+                '<input class="inputRegisterPHP" type="text" pattern="[0-9]{5}" id="zipcode" name="zipcode" required>' +
+                '<label for="zipcode">Código postal</label>' +
+                '</div>');
+            form.append('<button id="siguienteBotonRegister" type="submit">REGÍSTRATE</button>'); // Agrega el botón PARA REGISTRARSE
+        });
+
+
+
+
     
     $(document).on('click', '#siguienteBotonRegister', function(e) {
         var zipcode = $('#zipcode').val();
@@ -322,9 +337,9 @@ $(document).ready(function() {
         if (!$(this).val()) {
             $('#telephone').val('');
             $('#siguienteBotonRegisterTelephone').remove(); // Elimina el botón Siguiente del campo tlf
-            $('#country').val('');
-            $('#country').parent().remove(); // Elimina el campo de PAIS
-            $('#siguienteBotonRegisterCountry').remove(); // Elimina el botón Siguiente del campo PAIS
+           // $('#country').val('');
+            //$('#country').parent().remove(); // Elimina el campo de PAIS
+            //$('#siguienteBotonRegisterCountry').remove(); // Elimina el botón Siguiente del campo PAIS
             $('#city').val('');
             $('#city').parent().remove(); // Elimina el campo de city
             $('#siguienteBotonRegisterCity').remove(); // Elimina el botón Siguiente del campo city
