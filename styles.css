@@ -894,6 +894,16 @@ input:valid+label {
     padding: 0.25rem;
     border-radius: 9999px;
 }
+
+
+
+.question-column {
+    width: 60%;
+}
+
+.state-column {
+    width: 40%;
+}
 /* Estilos generales de la tabla */
 table {
     border-collapse: collapse;
