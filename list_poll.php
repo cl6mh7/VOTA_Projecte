@@ -42,59 +42,72 @@ include 'db_connection.php';
     </div>
 
     <div class="dashboardContenedor">
+    <div class="listPollContainer">
+    <?php   
+    if (isset($_SESSION['email'])) {
+        $email = $_SESSION['email'];
+
+        // Consulta para obtener el user_id
+        $selectStmt = $pdo->prepare("SELECT user_id FROM users WHERE email = ?");
+        $selectStmt->execute([$email]);
+        $userId = $selectStmt->fetchColumn();
         
-        <div class="listPollContainer">
-        <?php   
-        if (isset($_SESSION['email'])) {
-            $email = $_SESSION['email'];
+        if ($userId) {
+            // Consulta para recuperar preguntas basadas en el user_id
+            $pollStmt = $pdo->prepare("SELECT question, start_date, end_date, poll_state FROM poll WHERE user_id = ?");
+            $pollStmt->execute([$userId]);
 
-            // Consulta para obtener el user_id
-            $selectStmt = $pdo->prepare("SELECT user_id FROM users WHERE email = ?");
-            $selectStmt->execute([$email]);
-            $userId = $selectStmt->fetchColumn();
-            
-            if ($userId) {
-                // Consulta para recuperar preguntas basadas en el user_id
-                $pollStmt = $pdo->prepare("SELECT question, start_date, end_date, poll_state FROM poll WHERE user_id = ?");
-                $pollStmt->execute([$userId]);
+            // Mostrar las preguntas y el estado de la encuesta
+            echo "<h1>Mis encuestas</h1>";
+            echo "<table>";
+            echo "<thead><tr><th class='question-column'>Pregunta</th><th class='state-column'>Estado</th></tr></thead>";
 
-                // Mostrar las preguntas y el estado de la encuesta
-                echo "<h1>Mis encuestas</h1>";
-                echo "<table>";
-                echo "<thead><tr><th>Pregunta</th><th>Estado</th></tr></thead>";
-                echo "<tbody>";
-                while ($row = $pollStmt->fetch(PDO::FETCH_ASSOC)) {
-                    $question = $row['question'];
-                    $pollState = $row['poll_state'];
-                
-                    $stateTexts = array(
-                        'not_started' => 'No iniciada',
-                        'finished' => 'Finalizada',
-                        'active' => 'Activa',
-                    );
-                
-                    // Obtener el texto personalizado según el estado
-                    if (isset($stateTexts[$pollState])) {
-                        $stateText = $stateTexts[$pollState];
-                    } else {
-                        $stateText = $pollState;
-                    }
-                    echo "<tr><td>$question</td><td><span class='poll-state $pollState'>$stateText</span></td></tr>";
+            echo "<tbody>";
+            while ($row = $pollStmt->fetch(PDO::FETCH_ASSOC)) {
+                $question = $row['question'];
+                $pollState = $row['poll_state'];
+
+                // Añadir clases CSS basadas en el valor de pollState
+                $class = '';
+                switch ($pollState) {
+                    case 'not_started':
+                        $class = 'not-started';
+                        break;
+                    case 'finished':
+                        $class = 'finished';
+                        break;
+                    case 'active':
+                        $class = 'active';
+                        break;
                 }
-               
-                echo "</tbody>";
-                echo "</table>";
 
-                // Cerrar la consulta preparada
-                $pollStmt->closeCursor();
-            } else {
-                echo "No se encontró el user_id para el correo electrónico proporcionado.";
+                // Mapear los valores de estado a sus correspondientes textos en español
+                $stateTexts = array(
+                    'not_started' => 'No Iniciada',
+                    'finished' => 'Finalizada',
+                    'active' => 'Activa',
+                );
+
+                // Obtener el texto correspondiente al estado actual
+                $stateText = isset($stateTexts[$pollState]) ? $stateTexts[$pollState] : $pollState;
+
+                // Mostrar la pregunta y el estado de la encuesta en una fila de la tabla
+                echo "<tr><td>$question</td><td><span class='poll-state $class'>$stateText</span></td></tr>";
             }
+            echo "</tbody>";
+            echo "</table>";
+
+            // Cerrar la consulta preparada
+            $pollStmt->closeCursor();
         } else {
-            echo "La variable de sesión 'email' no está definida.";
+            echo "No se encontró el user_id para el correo electrónico proporcionado.";
         }
-        ?>
-        </div>
+    } else {
+        echo "La variable de sesión 'email' no está definida.";
+    }
+    ?>
+    </div>
+</div>
 
     <div class="contenedorFooter">
         <?php include 'footer.php'; ?>
