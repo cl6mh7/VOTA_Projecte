@@ -22,7 +22,7 @@
         
         <div class="containerRegister">
 
-            <form class="creacuentaRegister" action="https://aws21.ieti.site/register.php" method="post">
+            <form class="creacuentaRegister" action="register.php" method="post">
                 <h1>REGÍSTRATE</h1>
                 <img class="logoLogin" src="logosinfondo.png" alt="">
 
@@ -43,11 +43,11 @@ if(!empty($_POST)){
     $city = $_POST['city'];
     $zipcode = $_POST['zipcode'];
 
-    $token = bin2hex(random_bytes(16)); // Genera un token aleatorio
+    //$token = bin2hex(random_bytes(16)); // Genera un token aleatorio
 
     // Preparar la sentencia SQL
-    $sql = "INSERT INTO users (user_name, email, password, phone_number, country, city, zipcode, token)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO users (user_name, email, password, phone_number, country, city, zipcode)
+    VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$username, $email, $password, $telephone, $country, $city, $zipcode, $token]);

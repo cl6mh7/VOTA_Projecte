@@ -44,7 +44,7 @@ if(!isset($_SESSION['email'])) {
             
             <div class="circulosDashboard">
                 <div id="creaEncuesta">
-                    <a href="https://aws21.ieti.site/create_poll.php">
+                    <a href="create_poll.php">
                         <div class="imagenConTexto">
                             <img src="../imgs/aura.jpg" alt="La imagen que me has enviado es un fondo de pantalla abstracto y colorido. Los colores se mezclan suavemente entre sí, creando un efecto visual atractivo. Predominan los tonos de rosa y amarillo en el centro, mientras que hay matices de azul y morado que se mezclan en los bordes. La imagen no tiene objetos o elementos definidos; es puramente una exhibición de color. El efecto general es vibrante, cálido y visualmente estimulante.">
                             <p><strong>Crea tu encuesta</strong></p>
@@ -83,7 +83,7 @@ if(!isset($_SESSION['email'])) {
                 </div>
 
                 <div class="listarEncuestas">
-                    <a href="https://aws21.ieti.site/list_poll.php">
+                    <a href="list_poll.php">
                         <div class="imagenConTexto">
                             <img src="../imgs/aura5.jpg" alt="">
                             <p><strong>Listar encuestas</strong></p>

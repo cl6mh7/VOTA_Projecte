@@ -4,7 +4,7 @@ $countrySelectHTML = '';
 try {
     $hostname = "localhost";
     $dbname = "VOTE";
-    $username = "aws21";
+    $username = "root";
     $password = "P@ssw0rd";
 
     $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);

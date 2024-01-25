@@ -96,7 +96,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pdo = null;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,10 +117,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="question">Pregunta:</label>
             </div>
             <div class="datosCreatePoll">
-                <label id="numeroOpciones" for="numOptions">Número de opciones:</label>
-                <select id="numOptions" name="numOptions">
-                    <?php for ($i = 1; $i <= 100; $i++) echo "<option value='$i'>$i</option>"; ?>
-                </select>
+                <label id="numeroOpciones">Número de opciones:</label>
+                <button type="button" id="addOption">+</button>
+                <button type="button" id="removeOption" style="display: none;">-</button>
                 <div id="optionInputs"></div>
             </div>
 
@@ -142,11 +140,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <script>
         $(document).ready(function () {
-            $('#numOptions').change(function () {
-                var numOptions = $(this).val();
-                $('#optionInputs').empty();
-                for (var i = 1; i <= numOptions; i++) {
-                    $('#optionInputs').append('<label for="option' + i + '"></label><input placeholder="Option ' + i + '" type="text" id="option' + i + '" name="option' + i + '" required>');
+            var numOptions = 2;
+            for (var i = 1; i <= numOptions; i++) {
+                $('#optionInputs').append('<label for="option' + i + '"></label><input placeholder="Option ' + i + '" type="text" id="option' + i + '" name="option' + i + '" required>');
+            }
+
+            $('#addOption').click(function () {
+                numOptions++;
+                $('#optionInputs').append('<label for="option' + numOptions + '"></label><input placeholder="Option ' + numOptions + '" type="text" id="option' + numOptions + '" name="option' + numOptions + '" required>');
+                if (numOptions > 2) {
+                    $('#removeOption').show();
+                }
+            });
+
+            $('#removeOption').click(function () {
+                if (numOptions > 2) {
+                    $('#option' + numOptions).remove();
+                    $('label[for="option' + numOptions + '"]').remove();
+                    numOptions--;
+                    if (numOptions <= 2) {
+                        $('#removeOption').hide();
+                    }
                 }
             });
         });

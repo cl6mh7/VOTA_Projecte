@@ -1,6 +1,6 @@
 <?php
     // Conexión a la base de datos
-    $db = new mysqli('localhost', 'aws21', 'P@ssw0rd', 'VOTE');
+    $db = new mysqli('localhost', 'root', 'P@ssw0rd', 'VOTE');
 
     if ($db->connect_error) {
         die("Connection failed: " . $db->connect_error);

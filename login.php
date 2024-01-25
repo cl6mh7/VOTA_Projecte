@@ -64,7 +64,7 @@
                 </div>
                 
 
-                <a href="https://aws21.ieti.site/register.php" id="tienescuentaBotonLogin" type="submit">¿No tienes cuenta?</a>        
+                <a href="register.php" id="tienescuentaBotonLogin" type="submit">¿No tienes cuenta?</a>        
                 <button id="siguienteBotonLogin" type="submit">Siguiente</button>        
             </form>
         </div>
