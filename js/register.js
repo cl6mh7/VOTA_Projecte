@@ -382,21 +382,21 @@ function showSuccesPopup(message) {
     var errorPopup = $('<div/>', {
         id: 'errorPopup',
         text: message,
-        style: 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: green; color: white; padding: 20px; border-radius: 5px;'
+        style: 'position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%); background-color: green; color: white; padding: 20px; border-radius: 5px;'
     });
-  
+
     // Crear el botón "X"
     var closeButton = $('<button/>', {
         text: 'X',
         style: 'position: absolute; top: 0; right: 0; background-color: transparent; color: white; border: none; font-size: 20px; cursor: pointer;'
     });
-  
+
     // Añadir el botón "X" a la ventana flotante
     errorPopup.append(closeButton);
-  
+
     // Añadir la ventana flotante al cuerpo del documento
     $('body').append(errorPopup);
-  
+
     // Manejador de eventos para el botón "X"
     closeButton.click(function() {
         errorPopup.remove();
