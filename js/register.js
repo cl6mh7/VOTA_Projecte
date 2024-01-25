@@ -6,19 +6,20 @@ $(document).ready(function() {
 
     // Agrega el campo de username y el botón Siguiente para el username
     form.append('<div class="datosUsuarioRegister">' +
-                    '<input class="inputRegisterPHP" type="text" id="username" name="username" required>' +
-                    '<label for="username">Usuario</label>' +
-                '</div>');
+                '<input class="inputRegisterPHP" type="text" id="username" name="username" required>' +
+                '<label for="username">Usuario</label>' +
+            '</div>');
     form.append('<button id="siguienteBotonRegisterUsername" type="button">Siguiente</button>');
 
     // Cuando se hace clic en el botón Siguiente para el username, valida el campo de username y luego agrega el campo de email
     $(document).on('click', '#siguienteBotonRegisterUsername', function() {
         var username = $('#username').val();
         var regex = /^[a-zA-Z0-9]+$/; // Regex para validar que no hay caracteres especiales
+        var hasUppercase = /[A-Z]/.test(username); // Regex para validar que tiene al menos una letra mayúscula
 
-        // Si el campo de username está vacío o contiene caracteres especiales, muestra un mensaje de error y no agrega el campo de email
-        if (!username || !regex.test(username)) {
-            showErrorPopup('Por favor, introduce un nombre de usuario válido (sin caracteres especiales).');
+        // Si el campo de username está vacío, contiene caracteres especiales, tiene menos de 5 letras o no tiene al menos una letra mayúscula, muestra un mensaje de error y no agrega el campo de email
+        if (!username || !regex.test(username) || username.length < 5 || !hasUppercase) {
+            showErrorPopup('Por favor, introduce un nombre de usuario válido (sin caracteres especiales, al menos 5 letras y al menos una letra mayúscula).');
             return;
         }
 
@@ -350,34 +351,31 @@ $(document).ready(function() {
         });
 });
 
-
-
 function showErrorPopup(message) {
-    // Crear la ventana flotante
-    var errorPopup = $('<div/>', {
-        id: 'errorPopup',
-        text: message,
-        style: 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f44336; color: white; padding: 20px; border-radius: 5px;'
-    });
-  
-    // Crear el botón "X"
-    var closeButton = $('<button/>', {
-        text: 'X',
-        style: 'position: absolute; top: 0; right: 0; background-color: transparent; color: white; border: none; font-size: 20px; cursor: pointer;'
-    });
-  
-    // Añadir el botón "X" a la ventana flotante
-    errorPopup.append(closeButton);
-  
-    // Añadir la ventana flotante al cuerpo del documento
-    $('body').append(errorPopup);
-  
-    // Manejador de eventos para el botón "X"
-    closeButton.click(function() {
-        errorPopup.remove();
-    });
-}
+  // Crear la ventana flotante
+  var errorPopup = $('<div/>', {
+      id: 'errorPopup',
+      text: message,
+      style: 'position: fixed; top: 20%; left: 50%; transform: translate(-50%, -50%); background-color: #f44336; color: white; padding: 20px; border-radius: 5px;'
+  });
 
+  // Crear el botón "X"
+  var closeButton = $('<button/>', {
+      text: 'X',
+      style: 'position: absolute; top: 0; right: 0; background-color: transparent; color: white; border: none; font-size: 20px; cursor: pointer;'
+  });
+
+  // Añadir el botón "X" a la ventana flotante
+  errorPopup.append(closeButton);
+
+  // Añadir la ventana flotante al cuerpo del documento
+  $('body').append(errorPopup);
+
+  // Manejador de eventos para el botón "X"
+  closeButton.click(function() {
+      errorPopup.remove();
+  });
+}
 
 function showSuccesPopup(message) {
     // Crear la ventana flotante
